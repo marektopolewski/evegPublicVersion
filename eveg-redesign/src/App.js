@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom
 import ProductPage from './ProductPage';
 import logo from './logo.svg';
 import './App.css';
+import './Resets.css';
 import 'semantic-ui-css/semantic.min.css';
 
 class App extends Component {

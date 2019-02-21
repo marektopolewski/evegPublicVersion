@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom
 
 const LogoNav = () => <Link to="/" className="logo-nav">
 <svg
-  width="46px"
+  width="30px"
   height="40px"
   viewBox="0 0 46 40"
   version="1.1"
@@ -52,7 +52,7 @@ const LogoFooter = () => <svg
 
 const CartIconNav = (props) => <svg
   {...props}
-  width="30px"
+  width="25px"
   height="29px"
   viewBox="0 0 30 29"
   version="1.1"
@@ -65,4 +65,11 @@ const CartIconNav = (props) => <svg
   />
 </svg>
 
-export {LogoNav, LogoFooter, CartIconNav};
+const CloseIcon = (props) => <svg {...props} xmlns='http://www.w3.org/2000/svg' height='20' width='20' version='1'
+fill="#dedfe3" className="close-icon"
+viewBox='0 0 100 100'>
+    <path d='M98.169,89.331L58.838,50l39.331-39.331c2.441-2.441,2.441-6.396,0-8.838c-2.439-2.441-6.396-2.441-8.838,0 L50,41.162L10.669,1.831c-2.439-2.441-6.396-2.441-8.838,0c-2.441,2.437-2.441,6.396,0,8.838L41.162,50L1.831,89.331 c-2.441,2.441-2.441,6.396,0,8.838c2.441,2.441,6.396,2.441,8.838,0L50,58.838l39.331,39.331c2.441,2.441,6.399,2.441,8.838,0 C100.61,95.728,100.61,91.773,98.169,89.331z'
+    />
+</svg>
+
+export {LogoNav, LogoFooter, CartIconNav, CloseIcon };

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { LogoNav, CartIconNav } from './Asset';
-import Basket from './Basket';
+import { LogoNav } from './Asset';
+import { BasketButton } from './Basket';
+
+
 
 export default class Navigation extends Component {
   constructor(props, context){
@@ -12,9 +14,8 @@ export default class Navigation extends Component {
       <nav className="navigation">
         <LogoNav />
 
-        <CartIconNav style={{
-          marginLeft:'auto'
-        }} />
+        <BasketButton />
+
       </nav>
 
     );
