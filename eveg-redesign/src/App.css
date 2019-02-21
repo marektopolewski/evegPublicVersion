@@ -4,6 +4,43 @@ html, body, .App, #root {
   font-family: "Open Sans", sans-serif;
 }
 
+/* Footer styling */
+.footer {   
+  background-color: #363841;
+  height: 200px;
+  width: 100%; 
+  position:absolute;
+  left:0;
+  bottom:0;
+  right:0;
+}
+
+.footer p, .footer a, .footer div {
+  color: #a3a6b4;
+}
+
+.footer-table {
+  padding: 30px;
+  width: 100%;
+  height: 100%;
+}
+
+.footer-table td {
+  text-align: center;
+  vertical-align: middle;
+  padding: 5px;
+  position: relative;
+}
+
+.footer-small-td {
+  width: 30%;
+}
+
+.footer-large-td {
+  width: 40%;
+}
+/*---------------------------------------------------*/
+
 .navigation {
   height: 110px;
   width: 100%;
