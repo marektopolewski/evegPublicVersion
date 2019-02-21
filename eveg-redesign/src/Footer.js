@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { FooterIcon } from './Asset';
+import { FooterIcon, PayPalLogo, CardLogos } from './Asset';
 
 export default class Footer extends Component {
   render(){
     return (
-      <footer className="footer">
+      <footer className="footer">      
         <table className="footer-table"><tbody>
           <tr>
             <td className="footer-small-td">
@@ -14,6 +14,8 @@ export default class Footer extends Component {
             </td>
             <td className="footer-large-td">
               <FooterIcon />
+              <p className="copyright">@2014 InterVeg Coventry Ltd.</p>
+              <PayPalLogo /> <CardLogos />
             </td>
             <td className="footer-small-td">
               <p><b>Contact</b></p>
