@@ -166,4 +166,4 @@ const PayPalLogo = (props) => <svg
     </g>
 </svg>
 
-export {LogoNav, LogoFooter, CartIconNav, CloseIcon , PayPalLogo, CardLogos};
+export {FooterIcon, LogoNav, LogoFooter, CartIconNav, CloseIcon , PayPalLogo, CardLogos};
