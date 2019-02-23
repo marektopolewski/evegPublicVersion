@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { CartIconNav, CloseIcon } from './Asset';
+import { removeProductFromBasket, changeProductQuantity, getProductDetails, createEmptyBasket, addToBasket, readBasket } from './model.js';
 // import { Dropdown } from 'semantic-ui-react';
 // import NumberPicker from 'semantic-ui-react-numberpicker';
 
@@ -20,27 +21,91 @@ import { CartIconNav, CloseIcon } from './Asset';
 class BasketItem extends Component {
   constructor(props, context){
     super(props, context);
+    this.promptConfirmation = this.promptConfirmation.bind(this);
+    this.state = {
+      pendingConfirmation: false
+    };
   }
+
+  promptConfirmation(){
+    this.setState({
+      pendingConfirmation: true
+    })
+  }
+
 
   render(){
     return (
-      <tr>
-      <td><b>{this.props.name} ({this.props.variety})</b></td>
-          <td>{this.props.unitQuantity}</td>
-          <td style={{
+      <tr className="basket-item-container">
+      <td style={{
+        display: 'flex'
+      }}>
+        <div className="basket-item-image"
+          style={{
+            backgroundImage: `url('${this.props.image}')`
+          }}
+        />
+        <b style={{
+          marginLeft: '15px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>{this.props.name}</b>
+      </td>
+          <td>{this.props.units}</td>
+          <td>
+          <div style={{
             display: 'flex',
             alignItems: 'center'
           }}>
+          <button style={{
+            marginLeft: '10px',
+            marginRight: '10px'
+          }} className="number-picker button-fade" onClick={
+            () => this.props.incQuantity(this.props.name, this.props.quantity)
+          }>+</button>
+          {this.props.quantity}
+          <button style={{
+            marginLeft: '10px',
+            marginRight: '10px',
+          }}
+          disabled={this.props.quantity >1 ? false : true}
+          className="number-picker button-fade" onClick={
+            () => this.props.decQuantity(this.props.name, this.props.quantity)
+          }>-</button>
+          </div>
           </td>
           <td>{`£${(this.props.price * this.props.quantity).toFixed(2)}`}</td>
           <td>
-            <button className="button-fade">
+          {
+            !this.state.pendingConfirmation ?
+            <button
+            style={{
+              width: '100px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+            onClick={this.promptConfirmation}
+            className="button-fade">
               <CloseIcon style={{
                 height: '15px',
                 width: '15px',
                 fill: '#464646'
               }} />
             </button>
+            :
+            <button
+            style={{
+              width: '100px',
+              textAlign: 'center'
+            }}
+            onClick={() => this.props.removeItem(this.props.name)}
+            className="button-fade">
+              Remove {this.props.name}?
+            </button>
+          }
+
           </td>
         </tr>);
   }
@@ -52,6 +117,46 @@ class BasketItem extends Component {
 class Basket extends Component {
   constructor(props, context){
     super(props, context);
+    this.incQuantity = this.incQuantity.bind(this);
+    this.decQuantity = this.decQuantity.bind(this);
+    this.getBasketItems = this.getBasketItems.bind(this);
+    this.removeItem = this.removeItem.bind(this);
+    this.state = {};
+  }
+
+  // TODO: Raise error if user tried to go below 0.
+  decQuantity(name, quantity){
+    changeProductQuantity(name.toLowerCase(), Math.max(quantity - 1, 0));
+    this.setState(this.state);
+  }
+
+  incQuantity(name, quantity){
+    changeProductQuantity(name.toLowerCase(), quantity +1);
+    console.log(readBasket());
+    this.setState(this.state);
+  }
+
+  removeItem(name){
+    console.log("Removing", name);
+    removeProductFromBasket(name.toLowerCase());
+    this.setState(this.state);
+  }
+
+  // Converts model.js format into model for basket.
+  getBasketItems(){
+    var counts = readBasket();
+    var productDetails = getProductDetails();
+    var items = [];
+    for (var product in counts){
+      if (counts[product] !== "0") items.push(
+        {
+          ...productDetails[product],
+          quantity: parseInt(counts[product])
+        }
+      )
+    }
+    console.log(items);
+    return items;
   }
 
   render(){
@@ -61,6 +166,7 @@ class Basket extends Component {
           <h2>Your Basket</h2>
 
           <table>
+          <tbody>
           <tr>
             <th>Added Item</th>
             <th>Size</th>
@@ -68,8 +174,17 @@ class Basket extends Component {
             <th>Price</th>
           </tr>
           {
-            this.props.items.map(item => <BasketItem {...item} />)
+            this.getBasketItems().map((item, i) =>
+            <BasketItem
+              key={i}
+              incQuantity={this.incQuantity}
+              decQuantity={this.decQuantity}
+              removeItem={this.removeItem}
+              {...item}
+            />
+          )
           }
+        </tbody>
         </table>
 
         </div>
@@ -83,6 +198,12 @@ class Basket extends Component {
 class BasketButton extends Component {
   constructor(props, context){
     super(props, context);
+    console.log(getProductDetails());
+    createEmptyBasket();
+    addToBasket("apples", 3);
+    addToBasket("bananas", 2);
+
+    console.log(readBasket());
     this.state = {
       totalCost: 0,
       basketVisible: true,
@@ -117,17 +238,7 @@ class BasketButton extends Component {
 
       {
         this.state.basketVisible ?
-        <Basket items={[
-          {
-            name: "Apple",
-            image: 'https://www.bbcgoodfood.com/sites/default/files/styles/carousel_medium/public/guide/guide-image/2017/07/apples-700x350.png?itok=IZSWDgr1',
-            variety: "Braeburn",
-            price: 1.99,
-            unitQuantity: 6,
-            quantity: 1,
-            id: '1'
-          }
-        ]} />
+        <Basket />
         : ""
       }
 
