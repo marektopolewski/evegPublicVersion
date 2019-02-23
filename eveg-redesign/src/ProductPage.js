@@ -21,7 +21,9 @@ export default class ProductPage extends Component {
           )}
         </div>
 
-        <Footer />
+        <Footer style={{
+            position: 'unset'
+        }} />
         <ToastContainer />
       </div>
     );
