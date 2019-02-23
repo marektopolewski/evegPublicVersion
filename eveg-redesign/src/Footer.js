@@ -4,7 +4,7 @@ import { FooterIcon, PayPalLogo, CardLogos } from './Asset';
 export default class Footer extends Component {
     render(){
         return (
-            <footer className="footer">
+            <footer {...this.props} className="footer">
                 <table className="footer-table"><tbody>
                 <tr>
                     <td className="footer-small-td">
