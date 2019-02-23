@@ -205,8 +205,6 @@ className="button-fade general-button">
   {children}
 </button>
 
-
-export {LogoNav, FooterIcon, CartIconNav, CloseIcon , PayPalLogo, CardLogos, AddToCartButton};
 export {
   LogoNav,
   FooterIcon,

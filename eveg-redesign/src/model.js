@@ -1,24 +1,24 @@
 function getProductDetails() {
   var productDetails = {};
   productDetails["carrots"] = {};
-  productDetails["carrots"]["image"] = "carrots.gif";
-  productDetails["carrots"]["name"] = "Carrots";
+  productDetails["carrots"]["image"] = "https://www.almanac.com/sites/default/files/styles/primary_image_in_article/public/images/carrots.jpg";
+  productDetails["carrots"]["name"] = "Carrots (Nantes)";
   productDetails["carrots"]["description"] = "not just for rabbits";
   productDetails["carrots"]["units"] = "1kg";
   productDetails["carrots"]["price"] = 0.99;
   productDetails["carrots"]["expiryDate"] = 10;
 
   productDetails["bananas"] = {};
-  productDetails["bananas"]["image"] = "bananas.gif";
-  productDetails["bananas"]["name"] = "Bananas";
+  productDetails["bananas"]["image"] = "https://cosmos-images2.imgix.net/file/spina/photo/13954/100118_Debunked_01.jpg";
+  productDetails["bananas"]["name"] = "Bananas (Cavendish)";
   productDetails["bananas"]["description"] = "Yellow and banana-shaped";
   productDetails["bananas"]["units"] = "500g";
   productDetails["bananas"]["price"] = 1.29;
   productDetails["bananas"]["expiryDate"] = 10;
 
   productDetails["coconut"] = {};
-  productDetails["coconut"]["image"] = "coconut.gif";
-  productDetails["coconut"]["name"] = "Coconut";
+  productDetails["coconut"]["image"] = "https://jooinn.com/images/coconuts-12.jpg";
+  productDetails["coconut"]["name"] = "Coconut (West Coast Tall)";
   productDetails["coconut"]["description"] = "That exotic stuff";
   productDetails["coconut"]["units"] = "1";
   productDetails["coconut"]["price"] = 2.99;
@@ -33,32 +33,32 @@ function getProductDetails() {
   productDetails["apples"]["expiryDate"] = 10;
 
   productDetails["cherries"] = {};
-  productDetails["cherries"]["image"] = "cherries.gif";
-  productDetails["cherries"]["name"] = "Cherries";
+  productDetails["cherries"]["image"] = "https://iegvu.agribusinessintelligence.informa.com/-/media/agri-article-media/stock-images/raw-commodities/fruit-vegetable-crops/cherries/cherries_ripe_background_446356699_1200px.jpg";
+  productDetails["cherries"]["name"] = "Cherries (Bing)";
   productDetails["cherries"]["description"] = "Cherry pancake anyone?";
   productDetails["cherries"]["units"] = "500g";
   productDetails["cherries"]["price"] = 1.99;
   productDetails["cherries"]["expiryDate"] = 10;
 
   productDetails["tomatoes"] = {};
-  productDetails["tomatoes"]["image"] = "tomatoes.gif";
-  productDetails["tomatoes"]["name"] = "Tomatoes";
+  productDetails["tomatoes"]["image"] = "https://www.healthline.com/hlcmsresource/images/AN_images/AN313-Tomatoes-732x549-Thumb.jpg";
+  productDetails["tomatoes"]["name"] = "Tomatoes (Alicante)";
   productDetails["tomatoes"]["description"] = "Red and ripe";
   productDetails["tomatoes"]["units"] = "500g";
   productDetails["tomatoes"]["price"] = 1.99;
   productDetails["tomatoes"]["expiryDate"] = 10;
 
   productDetails["potatoes"] = {};
-  productDetails["potatoes"]["image"] = "potatoes.gif";
-  productDetails["potatoes"]["name"] = "Potatoes";
+  productDetails["potatoes"]["image"] = "https://cdn1.sph.harvard.edu/wp-content/uploads/sites/30/2014/01/potatoes-411975_1280-1200x800.jpg";
+  productDetails["potatoes"]["name"] = "Potatoes (Russet)";
   productDetails["potatoes"]["description"] = "Boil them, bake them, mash them...";
   productDetails["potatoes"]["units"] = "1kg";
   productDetails["potatoes"]["price"] = 0.99;
   productDetails["potatoes"]["expiryDate"] = 10;
 
   productDetails["beans"] = {};
-  productDetails["beans"]["image"] = "beans.gif";
-  productDetails["beans"]["name"] = "Beans";
+  productDetails["beans"]["image"] = "https://cdn.shopify.com/s/files/1/1698/1675/products/Bean_Blue_Lake_Pole.jpg";
+  productDetails["beans"]["name"] = "Beans (Blue Lake)";
   productDetails["beans"]["description"] = "Green and healthy";
   productDetails["beans"]["units"] = "1kg";
   productDetails["beans"]["price"] = 1.29;
