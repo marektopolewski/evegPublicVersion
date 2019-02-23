@@ -253,10 +253,14 @@ function getTotalBasketCost(){
   return getBasketItems().map(item => item.quantity*item.price).reduce((acc, curr) => curr + acc);
 }
 
+function formatPrice(cost){
+  return `£${cost.toFixed(2)}`
+}
+
 export {
   getName, getAddress, getCardDetails, getProductList, getProductDetails,
   getCookieVariableValue, setCardDetails, setAddress, setName, createEmptyOrder,
   createEmptyBasket, getProductQuantity, readBasket, calculateTotals, addToBasket,
   removeProductFromBasket, changeProductQuantity,
-  getBasketItems, getTotalBasketCost
+  getBasketItems, getTotalBasketCost, formatPrice
 }

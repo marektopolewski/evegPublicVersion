@@ -145,6 +145,32 @@ table th {
   font-weight: initial;
 }
 
+/** Checkout page styling */
+div.checkout-head-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+div.checkout-basket-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+
+/** Payment page styling */
+div.payment-form-container {
+  max-width: 700px;
+  margin: auto;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 /** Button styling for smooth animations on hover */
 button {
