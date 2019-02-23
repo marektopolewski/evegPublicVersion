@@ -108,7 +108,7 @@ button.active > svg {
 /* -------------------- Footer styling -------------------- */
 .footer {
   background-color: #363841;
-  height: 170px;
+  height: 150px;
   width: 100%;
   position:absolute;
   left:0;
@@ -121,7 +121,7 @@ button.active > svg {
 }
 
 .footer-table {
-  padding: 20px;
+  padding: 10px 20px 10px 20px;
   width: 100%;
   height: 100%;
 }
@@ -139,6 +139,10 @@ button.active > svg {
 
 .footer-large-td {
   width: 40%;
+}
+
+.footer-icon {
+    transform: scale(0.8);
 }
 
 .copyright {
