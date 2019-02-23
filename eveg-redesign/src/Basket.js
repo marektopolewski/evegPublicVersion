@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { CartIconNav, CloseIcon } from './Asset';
+import { CartIconNav, CloseIcon, Button } from './Asset';
+import { Link } from "react-router-dom";
 import {
   removeProductFromBasket,
   changeProductQuantity,
@@ -190,6 +191,16 @@ class Basket extends Component {
         </tbody>
         </table>
 
+        <div className="sub-basket-container">
+          <div className="basket-cost-container">
+            <h2 style={{margin: 0, fontWeight: 'normal'}}>Total</h2>
+            <h2 style={{margin: 0, marginLeft: '10px'}}>{this.props.totalCost}</h2>
+          </div>
+          <Link to="/checkout" className="general-button" style={{
+            backgroundColor: '#4A90E2'
+          }}>Proceed to checkout</Link>
+        </div>
+
         </div>
       </div>
     );
@@ -243,7 +254,7 @@ class BasketButton extends Component {
 
       {
         this.state.basketVisible ?
-        <Basket update={() => this.setState(this.state)}/>
+        <Basket totalCost={this.formatPrice(getTotalBasketCost())} update={() => this.setState(this.state)}/>
         : ""
       }
 
