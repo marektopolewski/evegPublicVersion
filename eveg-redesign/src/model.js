@@ -214,9 +214,41 @@ function getCookieVariableValue(variable) {
   if (parts.length == 2) return parts.pop().split(";").shift()
 }
 
+// Added utility functions.
+
+// Converts model.js format into model for basket:
+// [
+//   {
+//     name,
+//     quantity,
+//     unit,
+//     ...
+//   }
+// ]
+function getBasketItems(){
+  var counts = readBasket();
+  var productDetails = getProductDetails();
+  var items = [];
+  for (var product in counts){
+    if (counts[product] !== "0") items.push(
+      {
+        ...productDetails[product],
+        quantity: parseInt(counts[product])
+      }
+    )
+  }
+  return items;
+}
+
+function getTotalBasketCost(){
+  console.log(getBasketItems());
+  return getBasketItems().map(item => item.quantity*item.price).reduce((acc, curr) => curr + acc);
+}
+
 export {
   getName, getAddress, getCardDetails, getProductList, getProductDetails,
   getCookieVariableValue, setCardDetails, setAddress, setName, createEmptyOrder,
   createEmptyBasket, getProductQuantity, readBasket, calculateTotals, addToBasket,
-  removeProductFromBasket, changeProductQuantity
+  removeProductFromBasket, changeProductQuantity,
+  getBasketItems, getTotalBasketCost
 }
