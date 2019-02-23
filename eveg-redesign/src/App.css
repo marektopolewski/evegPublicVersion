@@ -232,7 +232,12 @@ button.active > svg {
 
 /*------------ Item card styling -----------------*/
 .products-container {
-  margin: 10px 10px 10px 10px;
+  margin: 20px auto 0 auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1000px;
 }
 
 .card-container {
@@ -297,6 +302,10 @@ button.active > svg {
 
 .add-button-div {
   overflow: hidden;
+}
+
+.add-button-div:hover {
+  cursor: pointer;
 }
 
 .select-quantity-dropdown__control {

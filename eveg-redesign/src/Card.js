@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import {AddToCartButton} from './Asset';
+import {addToBasket, getProductDetails} from './model';
+
 import Select from 'react-select';
 import Modal from 'react-awesome-modal';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default class Card extends Component {
 
@@ -22,6 +26,26 @@ export default class Card extends Component {
         });
     }
 
+    addBasketWrapper(product, selectedOption) {
+
+        const quantity = selectedOption===null ? -1 : selectedOption.value;
+        if (quantity<1) {
+            toast.info("Please specify the quantity.", {
+                position: toast.POSITION.TOP_CENTER
+            });
+            return;
+        }
+
+        toast.success("Item successfully added!", {
+            position: toast.POSITION.TOP_CENTER
+        });
+        this.setState({ selectedOption : null });
+        addToBasket(this.props.itemID, quantity);
+        this.props.updates();
+
+        console.log('Added ' + product + ' in quantity ' + quantity);
+    }
+
     handleChange = (selectedOption) => {
         this.setState({ selectedOption });
         console.log(`Option selected:`, selectedOption);
@@ -29,7 +53,9 @@ export default class Card extends Component {
 
     render(){
         const { selectedOption } = this.state;
-        const item = this.props.item;
+
+        const prods = getProductDetails();
+        const item = prods[this.props.itemID];
 
         const expiresOn = new Date();
         expiresOn.setDate(expiresOn.getDate()+item.expiryDate);
@@ -52,7 +78,7 @@ export default class Card extends Component {
                 <Modal visible={this.state.visible} width="600" height="390" effect="fadeInUp" onClickAway={() => this.closeModal()}>
                     <div style={{textAlign:`center`}}>
                         <div style={{marginRight:`20px`, position:`absolute`, right:`0`}}>
-                            <a href="javascript:void(0);" onClick={() => this.closeModal()}>Close</a>
+                            <a href={"javascript:void(0);"} onClick={() => this.closeModal()}>Close</a>
                         </div>
                         <h1>{item.name}</h1>
                         <div
@@ -88,7 +114,9 @@ export default class Card extends Component {
                             placeholder={"0"}
                         />
                     </div>
-                    <div className="add-button-div">
+                    <div className="add-button-div" onClick={() => {
+                        this.addBasketWrapper(this.props, selectedOption);
+                    }}>
                         <AddToCartButton />
                     </div>
                 </div>

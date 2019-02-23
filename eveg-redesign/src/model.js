@@ -6,6 +6,7 @@ function getProductDetails() {
   productDetails["carrots"]["description"] = "not just for rabbits";
   productDetails["carrots"]["units"] = "1kg";
   productDetails["carrots"]["price"] = 0.99;
+  productDetails["carrots"]["expiryDate"] = 10;
 
   productDetails["bananas"] = {};
   productDetails["bananas"]["image"] = "bananas.gif";
@@ -13,6 +14,7 @@ function getProductDetails() {
   productDetails["bananas"]["description"] = "Yellow and banana-shaped";
   productDetails["bananas"]["units"] = "500g";
   productDetails["bananas"]["price"] = 1.29;
+  productDetails["bananas"]["expiryDate"] = 10;
 
   productDetails["coconut"] = {};
   productDetails["coconut"]["image"] = "coconut.gif";
@@ -20,6 +22,7 @@ function getProductDetails() {
   productDetails["coconut"]["description"] = "That exotic stuff";
   productDetails["coconut"]["units"] = "1";
   productDetails["coconut"]["price"] = 2.99;
+  productDetails["coconut"]["expiryDate"] = 10;
 
   productDetails["apples"] = {};
   productDetails["apples"]["image"] = "https://www.lankaprincess.com/wp-content/uploads/2016/08/apples-768x480.jpg";
@@ -28,7 +31,6 @@ function getProductDetails() {
   productDetails["apples"]["units"] = "1kg";
   productDetails["apples"]["price"] = 1.49;
   productDetails["apples"]["expiryDate"] = 10;
-  productDetails["apples"]["id"] = 4;
 
   productDetails["cherries"] = {};
   productDetails["cherries"]["image"] = "cherries.gif";
@@ -36,6 +38,7 @@ function getProductDetails() {
   productDetails["cherries"]["description"] = "Cherry pancake anyone?";
   productDetails["cherries"]["units"] = "500g";
   productDetails["cherries"]["price"] = 1.99;
+  productDetails["cherries"]["expiryDate"] = 10;
 
   productDetails["tomatoes"] = {};
   productDetails["tomatoes"]["image"] = "tomatoes.gif";
@@ -43,6 +46,7 @@ function getProductDetails() {
   productDetails["tomatoes"]["description"] = "Red and ripe";
   productDetails["tomatoes"]["units"] = "500g";
   productDetails["tomatoes"]["price"] = 1.99;
+  productDetails["tomatoes"]["expiryDate"] = 10;
 
   productDetails["potatoes"] = {};
   productDetails["potatoes"]["image"] = "potatoes.gif";
@@ -50,6 +54,7 @@ function getProductDetails() {
   productDetails["potatoes"]["description"] = "Boil them, bake them, mash them...";
   productDetails["potatoes"]["units"] = "1kg";
   productDetails["potatoes"]["price"] = 0.99;
+  productDetails["potatoes"]["expiryDate"] = 10;
 
   productDetails["beans"] = {};
   productDetails["beans"]["image"] = "beans.gif";
@@ -57,6 +62,7 @@ function getProductDetails() {
   productDetails["beans"]["description"] = "Green and healthy";
   productDetails["beans"]["units"] = "1kg";
   productDetails["beans"]["price"] = 1.29;
+  productDetails["beans"]["expiryDate"] = 10;
 
   return productDetails;
 }
