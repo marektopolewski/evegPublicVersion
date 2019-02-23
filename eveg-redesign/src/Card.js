@@ -1,31 +1,65 @@
 import React, { Component } from 'react';
-import {AddToCartButton, ApplesCard} from './Asset';
+import {AddToCartButton} from './Asset';
+import {addToBasket, getProductDetails} from './model';
+
 import Select from 'react-select';
+import Modal from 'react-awesome-modal';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default class Card extends Component {
 
     state = {
         selectedOption: null,
-    }
-    handleChange = (selectedOption) => {
-        this.setState({ selectedOption });
+        visible: false,
+    };
+
+    openModal() {
+        this.setState({
+            visible : true
+        });
     }
 
+    closeModal() {
+        this.setState({
+            visible : false
+        });
+    }
+
+    addBasketWrapper(product, selectedOption) {
+
+        const quantity = selectedOption===null ? -1 : selectedOption.value;
+        if (quantity<1) {
+            toast.info("Please specify the quantity.", {
+                position: toast.POSITION.TOP_CENTER
+            });
+            return;
+        }
+
+        toast.success("Item successfully added!", {
+            position: toast.POSITION.TOP_CENTER
+        });
+        this.setState({ selectedOption : null });
+        addToBasket(this.props.itemID, quantity);
+        this.props.updates();
+
+        console.log('Added ' + product + ' in quantity ' + quantity);
+    }
+
+    handleChange = (selectedOption) => {
+        this.setState({ selectedOption });
+        console.log(`Option selected:`, selectedOption);
+    };
+
     render(){
-        const item = this.props.item;
-        var inside;
+        const { selectedOption } = this.state;
+
+        const prods = getProductDetails();
+        const item = prods[this.props.itemID];
 
         const expiresOn = new Date();
         expiresOn.setDate(expiresOn.getDate()+item.expiryDate);
         var dateFormat = require('dateformat');
-        
-        switch (item.id) {
-            case 1:
-                inside = <ApplesCard />
-                break;
-            default:
-                inside = "Item not found"
-        }
 
         const maxAmount = item.maxAmount>0 ? item.maxAmount : 100;
         var i;
@@ -36,9 +70,24 @@ export default class Card extends Component {
 
         return (
             <div className="card-container">
-                <div className="card-image">
-                    {inside}
-                </div>
+                <div
+                    className="card-image-div"
+                    style={{backgroundImage: `url('${item.image}')`, backgroundSize: `cover`}}
+                    onClick={() => this.openModal()}
+                />
+                <Modal visible={this.state.visible} width="600" height="390" effect="fadeInUp" onClickAway={() => this.closeModal()}>
+                    <div style={{textAlign:`center`}}>
+                        <div style={{marginRight:`20px`, position:`absolute`, right:`0`}}>
+                            <a href={"javascript:void(0);"} onClick={() => this.closeModal()}>Close</a>
+                        </div>
+                        <h1>{item.name}</h1>
+                        <div
+                            className="card-popup-div"
+                            style={{backgroundImage: `url('${item.image}')`, backgroundSize: `cover`}}
+                            onClick={() => this.openModal()}
+                        />
+                    </div>
+                </Modal>
                 <div className="card-title">
                     {item.name}
                 </div>
@@ -51,7 +100,7 @@ export default class Card extends Component {
                             &pound;{item.price}
                         </td>
                         <td className="card-form-td">
-                            {item.form}
+                            Pack of {item.units}
                         </td>
                     </tr></tbody></table>
                 </div>
@@ -59,12 +108,15 @@ export default class Card extends Component {
                     <div className="dropdown-div">
                         <Select
                             classNamePrefix="select-quantity-dropdown"
-                            value={this.state}
+                            value={selectedOption}
                             onChange={this.handleChange}
                             options={options}
+                            placeholder={"0"}
                         />
                     </div>
-                    <div className="add-button-div">
+                    <div className="add-button-div" onClick={() => {
+                        this.addBasketWrapper(this.props, selectedOption);
+                    }}>
                         <AddToCartButton />
                     </div>
                 </div>
