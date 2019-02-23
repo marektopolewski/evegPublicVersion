@@ -23,10 +23,12 @@ function getProductDetails() {
 
   productDetails["apples"] = {};
   productDetails["apples"]["image"] = "https://www.lankaprincess.com/wp-content/uploads/2016/08/apples-768x480.jpg";
-  productDetails["apples"]["name"] = "Apples";
+  productDetails["apples"]["name"] = "Apple (Braeburn)";
   productDetails["apples"]["description"] = "Red, sweet and juicy";
   productDetails["apples"]["units"] = "1kg";
   productDetails["apples"]["price"] = 1.49;
+  productDetails["apples"]["expiryDate"] = 10;
+  productDetails["apples"]["id"] = 4;
 
   productDetails["cherries"] = {};
   productDetails["cherries"]["image"] = "cherries.gif";
