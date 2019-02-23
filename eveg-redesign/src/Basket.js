@@ -10,6 +10,7 @@ import {
   readBasket,
   getBasketItems,
   getTotalBasketCost,
+  formatPrice
 } from './model.js';
 import ReactTooltip from 'react-tooltip';
 // import { Dropdown } from 'semantic-ui-react';
@@ -165,7 +166,7 @@ class Basket extends Component {
 
   render(){
     return (
-      <div className="basket-container">
+      <div style={this.props.style} className="basket-container">
         <div className="basket-header">
           <h2>Your Basket</h2>
 
@@ -191,15 +192,7 @@ class Basket extends Component {
         </tbody>
         </table>
 
-        <div className="sub-basket-container">
-          <div className="basket-cost-container">
-            <h2 style={{margin: 0, fontWeight: 'normal'}}>Total</h2>
-            <h2 style={{margin: 0, marginLeft: '10px'}}>{this.props.totalCost}</h2>
-          </div>
-          <Link to="/checkout" className="general-button" style={{
-            backgroundColor: '#4A90E2'
-          }}>Proceed to checkout</Link>
-        </div>
+        {this.props.children}
 
         </div>
       </div>
@@ -225,11 +218,6 @@ class BasketButton extends Component {
     this.toggleBasket = this.toggleBasket.bind(this);
   }
 
-  // Formats cost to string.
-  formatPrice(cost){
-    return `£${cost.toFixed(2)}`
-  }
-
   toggleBasket(){
     this.setState({
       ...this.state,
@@ -248,13 +236,24 @@ class BasketButton extends Component {
           marginLeft: '15px',
           fontWeight: 'bold'
         }}>{
-          this.formatPrice(getTotalBasketCost())
+          formatPrice(getTotalBasketCost())
         }</p>
 
 
       {
         this.state.basketVisible ?
-        <Basket totalCost={this.formatPrice(getTotalBasketCost())} update={() => this.setState(this.state)}/>
+        <Basket update={() => this.setState(this.state)}>
+          <div className="sub-basket-container">
+            <div className="basket-cost-container">
+              <h2 style={{margin: 0, fontWeight: 'normal'}}>Total</h2>
+              <h2 style={{margin: 0, marginLeft: '10px'}}>{formatPrice(getTotalBasketCost())}</h2>
+            </div>
+            <Link to="/checkout" className="general-button" style={{
+              backgroundColor: '#4A90E2'
+            }}>Proceed to checkout</Link>
+          </div>
+          </Basket>
+
         : ""
       }
 
@@ -263,4 +262,4 @@ class BasketButton extends Component {
   }
 }
 
-export { BasketButton };
+export { BasketButton, Basket };
