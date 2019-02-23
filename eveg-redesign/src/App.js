@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import ProductPage from './ProductPage';
 import logo from './logo.svg';
+import './model.js';
 import './App.css';
 import './Resets.css';
 import 'semantic-ui-css/semantic.min.css';

@@ -1,5 +1,5 @@
 function getProductDetails() {
-  productDetails = {};
+  var productDetails = {};
   productDetails["carrots"] = {};
   productDetails["carrots"]["image"] = "carrots.gif";
   productDetails["carrots"]["name"] = "Carrots";
@@ -22,7 +22,7 @@ function getProductDetails() {
   productDetails["coconut"]["price"] = 2.99;
 
   productDetails["apples"] = {};
-  productDetails["apples"]["image"] = "apples.gif";
+  productDetails["apples"]["image"] = "https://www.lankaprincess.com/wp-content/uploads/2016/08/apples-768x480.jpg";
   productDetails["apples"]["name"] = "Apples";
   productDetails["apples"]["description"] = "Red, sweet and juicy";
   productDetails["apples"]["units"] = "1kg";
@@ -78,7 +78,7 @@ function getProductQuantity(product) {
 
 function readBasket() {
   var basket = {};
-  products = getProductList();
+  var products = getProductList();
   var productcount = products.length;
   for (var i = 0; i < productcount; i++) {
     basket[products[i]] = getProductQuantity(products[i]);
@@ -91,12 +91,12 @@ function calculateTotals() {
   var basket = readBasket();
   var productDetails = getProductDetails();
 
-  total = 0;
+  var total = 0;
   for (var product in basket) {
     total += parseInt(basket[product]) * parseFloat(productDetails[product]["price"]);
   }
 
-  totals = {};
+  var totals = {};
   totals["total"] = total.toString();
   totals["vat"] = (total - total / 1.175).toString();
   totals["totalnovat"] = (total / 1.175).toString();
@@ -109,8 +109,8 @@ function addToBasket(product, quantity) {
     createEmptyBasket();
   }
 
-  oldquantity = parseInt(getProductQuantity(product));
-  newquantity = oldquantity + parseInt(quantity);
+  var oldquantity = parseInt(getProductQuantity(product));
+  var newquantity = oldquantity + parseInt(quantity);
 
   document.cookie = product + "=" + newquantity.toString() + ";path=/";
 }
@@ -124,7 +124,7 @@ function changeProductQuantity(product, newquantity) {
 }
 
 function createEmptyBasket() {
-  products = getProductList();
+  var products = getProductList();
   var productcount = products.length;
   for (var i = 0; i < productcount; i++) {
     document.cookie=products[i] + "=0;path=/";
@@ -212,4 +212,11 @@ function getCookieVariableValue(variable) {
   var value = "; " + document.cookie;
   var parts = value.split("; " + variable + "=");
   if (parts.length == 2) return parts.pop().split(";").shift()
+}
+
+export {
+  getName, getAddress, getCardDetails, getProductList, getProductDetails,
+  getCookieVariableValue, setCardDetails, setAddress, setName, createEmptyOrder,
+  createEmptyBasket, getProductQuantity, readBasket, calculateTotals, addToBasket,
+  removeProductFromBasket, changeProductQuantity
 }
