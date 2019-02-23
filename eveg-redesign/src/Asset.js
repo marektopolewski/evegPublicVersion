@@ -197,6 +197,23 @@ const AddToCartButton = (props) => <svg
     </g>
 </svg>
 
+const Button = ({colour, children}) => <button
+style={{
+  backgroundColor: colour
+}}
+className="button-fade general-button">
+  {children}
+</button>
 
 
 export {LogoNav, FooterIcon, CartIconNav, CloseIcon , PayPalLogo, CardLogos, AddToCartButton};
+export {
+  LogoNav,
+  FooterIcon,
+  CartIconNav,
+  CloseIcon ,
+  PayPalLogo,
+  CardLogos,
+  AddToCartButton,
+  Button
+};

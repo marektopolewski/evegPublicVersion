@@ -76,6 +76,20 @@ a.logo-nav p {
 
 
 /** Basket Styling */
+
+div.sub-basket-container {
+  display: flex;
+  padding: 5px;
+  padding-bottom: 0px;
+  justify-content: space-evenly;
+  margin-top: 10px;
+}
+
+div.basket-cost-container {
+  display: flex;
+  justify-content: center;
+}
+
 table {
   border-collapse: collapse;
 }
@@ -117,6 +131,7 @@ div.basket-container {
     top: 60px;
     background: #FFFFFF;
     box-shadow: 0 1px 14px 0 rgba(0,0,0,0.10);
+    z-index: 1;
 }
 
 table {
@@ -136,6 +151,13 @@ button {
   cursor: pointer;
   transition: 0.3s ease-in-out;
   display: flex;
+}
+
+.general-button {
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  font-weight: 600;
 }
 
 button.button-fade {

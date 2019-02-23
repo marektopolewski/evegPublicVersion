@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
-import { CartIconNav, CloseIcon } from './Asset';
-import { removeProductFromBasket, changeProductQuantity, getProductDetails, createEmptyBasket, addToBasket, readBasket } from './model.js';
+import { CartIconNav, CloseIcon, Button } from './Asset';
+import { Link } from "react-router-dom";
+import {
+  removeProductFromBasket,
+  changeProductQuantity,
+  getProductDetails,
+  createEmptyBasket,
+  addToBasket,
+  readBasket,
+  getBasketItems,
+  getTotalBasketCost,
+} from './model.js';
+import ReactTooltip from 'react-tooltip';
 // import { Dropdown } from 'semantic-ui-react';
 // import NumberPicker from 'semantic-ui-react-numberpicker';
 
@@ -15,8 +26,6 @@ import { removeProductFromBasket, changeProductQuantity, getProductDetails, crea
  *    }
  * ]
  */
-
-// const NumberPicker = ()
 
 class BasketItem extends Component {
   constructor(props, context){
@@ -65,14 +74,24 @@ class BasketItem extends Component {
             () => this.props.incQuantity(this.props.name, this.props.quantity)
           }>+</button>
           {this.props.quantity}
-          <button style={{
-            marginLeft: '10px',
-            marginRight: '10px',
-          }}
-          disabled={this.props.quantity >1 ? false : true}
-          className="number-picker button-fade" onClick={
-            () => this.props.decQuantity(this.props.name, this.props.quantity)
-          }>-</button>
+            <button
+            {
+              ...Object(
+                this.props.quantity > 1 ? {} : {
+                'data-tooltip': "Cannot reduce product quantity to 0. Remove instead."
+                }
+              )
+            }
+            style={{
+              marginLeft: '10px',
+              marginRight: '10px',
+            }}
+            disabled={this.props.quantity >1 ? false : true}
+            className="number-picker button-fade" onClick={
+              () => this.props.decQuantity(this.props.name, this.props.quantity)
+            }>
+            -
+            </button>
           </div>
           </td>
           <td>{`£${(this.props.price * this.props.quantity).toFixed(2)}`}</td>
@@ -119,7 +138,6 @@ class Basket extends Component {
     super(props, context);
     this.incQuantity = this.incQuantity.bind(this);
     this.decQuantity = this.decQuantity.bind(this);
-    this.getBasketItems = this.getBasketItems.bind(this);
     this.removeItem = this.removeItem.bind(this);
     this.state = {};
   }
@@ -128,35 +146,21 @@ class Basket extends Component {
   decQuantity(name, quantity){
     changeProductQuantity(name.toLowerCase(), Math.max(quantity - 1, 0));
     this.setState(this.state);
+    this.props.update();
   }
 
   incQuantity(name, quantity){
     changeProductQuantity(name.toLowerCase(), quantity +1);
     console.log(readBasket());
     this.setState(this.state);
+    this.props.update();
   }
 
   removeItem(name){
     console.log("Removing", name);
     removeProductFromBasket(name.toLowerCase());
     this.setState(this.state);
-  }
-
-  // Converts model.js format into model for basket.
-  getBasketItems(){
-    var counts = readBasket();
-    var productDetails = getProductDetails();
-    var items = [];
-    for (var product in counts){
-      if (counts[product] !== "0") items.push(
-        {
-          ...productDetails[product],
-          quantity: parseInt(counts[product])
-        }
-      )
-    }
-    console.log(items);
-    return items;
+    this.props.update();
   }
 
   render(){
@@ -174,7 +178,7 @@ class Basket extends Component {
             <th>Price</th>
           </tr>
           {
-            this.getBasketItems().map((item, i) =>
+            getBasketItems().map((item, i) =>
             <BasketItem
               key={i}
               incQuantity={this.incQuantity}
@@ -186,6 +190,16 @@ class Basket extends Component {
           }
         </tbody>
         </table>
+
+        <div className="sub-basket-container">
+          <div className="basket-cost-container">
+            <h2 style={{margin: 0, fontWeight: 'normal'}}>Total</h2>
+            <h2 style={{margin: 0, marginLeft: '10px'}}>{this.props.totalCost}</h2>
+          </div>
+          <Link to="/checkout" className="general-button" style={{
+            backgroundColor: '#4A90E2'
+          }}>Proceed to checkout</Link>
+        </div>
 
         </div>
       </div>
@@ -233,12 +247,14 @@ class BasketButton extends Component {
         <p style={{
           marginLeft: '15px',
           fontWeight: 'bold'
-        }}>{this.formatPrice(this.state.totalCost)}</p>
+        }}>{
+          this.formatPrice(getTotalBasketCost())
+        }</p>
 
 
       {
         this.state.basketVisible ?
-        <Basket />
+        <Basket totalCost={this.formatPrice(getTotalBasketCost())} update={() => this.setState(this.state)}/>
         : ""
       }
 
