@@ -277,7 +277,7 @@ button.active > svg {
   font-size: 70%;
 }
 
-/*------------ Item card styling -----------------*/
+/*---------------- Product page ------------------*/
 .products-container {
   margin: 0 auto 20px auto;
   display: flex;
@@ -285,6 +285,25 @@ button.active > svg {
   justify-content: space-around;
   max-width: 1100px;
 }
+
+.select-div {
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.select-order-div {
+  margin-right: 15px;
+  width: 180px;
+}
+
+.select-display-div {
+  margin-right: 10px;
+  width: 150px;
+}
+
+/*------------ Item card styling -----------------*/
 .card-container {
   margin-top: 20px;
   height: 320px;

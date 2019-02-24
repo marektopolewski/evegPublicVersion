@@ -39,7 +39,7 @@ export default class Card extends Component {
         toast.success("Item successfully added!", {
             position: toast.POSITION.TOP_CENTER
         });
-        this.setState({ selectedOption : null });
+        this.setState({ selectedDisplay : null });
         addToBasket(this.props.itemID, quantity);
         this.props.updates();
 
@@ -48,7 +48,6 @@ export default class Card extends Component {
 
     handleChange = (selectedOption) => {
         this.setState({ selectedOption });
-        console.log(`Option selected:`, selectedOption);
     };
 
     render(){
