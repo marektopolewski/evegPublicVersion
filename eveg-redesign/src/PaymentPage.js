@@ -18,8 +18,6 @@ export default class PaymentPage extends Component {
     return (
 
       <div>
-        <Navigation />
-
         <div className="checkout-head-container">
 
         <h1> Payment </h1>
@@ -111,8 +109,6 @@ export default class PaymentPage extends Component {
             backgroundColor: '#7ED321'
           }} className="general-button" to="/confirmation">Confirm Order</Link>
         </div>
-
-        <Footer style={{position: 'unset'}} />
       </div>
 
     );

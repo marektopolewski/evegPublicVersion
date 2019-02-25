@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import Navigation from './Navigation';
+import Footer from './Footer';
 import ProductPage from './ProductPage';
 import CheckoutPage from './CheckoutPage';
 import PaymentPage from './PaymentPage';
@@ -16,6 +18,7 @@ class App extends Component {
     return (
       <Router>
       <div className="App">
+      <Navigation />
       <Route exact path="/" component={
           ({history}) => <ProductPage history={history} />
         } />
@@ -26,6 +29,9 @@ class App extends Component {
           ({history}) => <PaymentPage history={history} />
         } />
         <ToastContainer />
+        <Footer style={{
+          position: 'unset'
+        }} />
       </div>
       </Router>
     );

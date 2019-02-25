@@ -104,7 +104,6 @@ export default class ProductPage extends Component {
 
     return (
       <div className="product-page-container">
-        <Navigation />
 
         <div className="products-container" style={{maxWidth:this.state.prodBoxWidth}}>
 
@@ -118,7 +117,6 @@ export default class ProductPage extends Component {
           )}
         </div>
 
-        <Footer style={{ position: 'unset' }} />
       </div>
     );
   }
