@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export default class Card extends Component {
 
     state = {
-        selectedOption: null,
+        selectedOption: {label:1, value:1},
         visible: false,
     };
 
@@ -29,7 +29,8 @@ export default class Card extends Component {
     addBasketWrapper(product, selectedOption) {
 
         const quantity = selectedOption===null ? -1 : selectedOption.value;
-        if (quantity<1) {
+        console.log("selected="+selectedOption.value);
+        if (quantity<1 || quantity===undefined) {
             toast.info("Please specify the quantity.", {
                 position: toast.POSITION.TOP_CENTER
             });
@@ -39,7 +40,7 @@ export default class Card extends Component {
         toast.success("Item successfully added!", {
             position: toast.POSITION.TOP_CENTER
         });
-        this.setState({ selectedDisplay : null });
+        this.setState({ selectedDisplay : 1 });
         addToBasket(this.props.itemID, quantity);
         this.props.updates();
 
@@ -110,7 +111,7 @@ export default class Card extends Component {
                             value={selectedOption}
                             onChange={this.handleChange}
                             options={options}
-                            placeholder={"0"}
+                            placeholder={"1"}
                         />
                     </div>
                     <div className="add-button-div" onClick={() => {

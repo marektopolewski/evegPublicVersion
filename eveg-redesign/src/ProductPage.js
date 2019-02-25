@@ -110,10 +110,17 @@ export default class ProductPage extends Component {
 
         <div className="products-container" style={{maxWidth:this.state.prodBoxWidth}}>
 
-          <div className="select-div">
-            <DisplaySelect />
-            <OrderingSelect />
-          </div>
+            <div className="product-page-header">
+                <div className="product-page-title">
+                    <div><h1>Products</h1></div>
+                    <div className="product-page-description">Select your items below</div>
+                </div>
+
+                <div className="select-div">
+                    <DisplaySelect />
+                    <OrderingSelect />
+                </div>
+            </div>
 
           {this.state.prodList.map((item, i) =>
             <Card itemID = {item} updates={() => this.setState(this.state)} />
