@@ -13,19 +13,30 @@ import 'semantic-ui-css/semantic.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 class App extends Component {
+
+  constructor(props, context){
+    super(props, context);
+    this.state = {};
+    this.updates = this.updates.bind(this);
+  }
+
+  updates(){
+    this.setState(this.state);
+  }
+
   render() {
     return (
       <Router>
       <div className="App">
       <Navigation />
       <Route exact path="/" component={
-          ({history}) => <ProductPage history={history} />
+          ({history}) => <ProductPage updates={this.updates} history={history} />
         } />
       <Route exact path="/checkout" component={
-          ({history}) => <CheckoutPage history={history} />
+          ({history}) => <CheckoutPage updates={this.updates} history={history} />
         } />
       <Route exact path="/payment" component={
-          ({history}) => <PaymentPage history={history} />
+          ({history}) => <PaymentPage updates={this.updates} history={history} />
         } />
         <ToastContainer />
         <Footer />

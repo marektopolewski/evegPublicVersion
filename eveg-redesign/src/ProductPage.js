@@ -114,7 +114,7 @@ export default class ProductPage extends Component {
           </div>
 
           {this.state.prodList.map((item, i) =>
-            <Card itemID = {item} display={this.state.display} updates={() => this.setState(this.state)} />
+            <Card itemID = {item} display={this.state.display} updates={this.props.updates} />
           )}
         </div>
     );
