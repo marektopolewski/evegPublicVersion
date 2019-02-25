@@ -17,8 +17,6 @@ export default class CheckoutPage extends Component {
 
     return (
       <div>
-        <Navigation />
-
         <div className="checkout-head-container">
 
         <h1> Checkout </h1>
@@ -94,9 +92,6 @@ export default class CheckoutPage extends Component {
           </Basket>
         </div>
 
-        <Footer style={{
-          position: 'unset'
-        }} />
       </div>
     );
 

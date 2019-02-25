@@ -13,6 +13,7 @@ import {
   formatPrice
 } from './model.js';
 import ReactTooltip from 'react-tooltip';
+import { toast } from 'react-toastify';
 // import { Dropdown } from 'semantic-ui-react';
 // import NumberPicker from 'semantic-ui-react-numberpicker';
 
@@ -72,7 +73,7 @@ class BasketItem extends Component {
             marginLeft: '10px',
             marginRight: '10px'
           }} className="number-picker button-fade" onClick={
-            () => this.props.incQuantity(this.props.name, this.props.quantity)
+            () => this.props.incQuantity(this.props.id, this.props.quantity)
           }>+</button>
           {this.props.quantity}
             <button
@@ -89,7 +90,7 @@ class BasketItem extends Component {
             }}
             disabled={this.props.quantity >1 ? false : true}
             className="number-picker button-fade" onClick={
-              () => this.props.decQuantity(this.props.name, this.props.quantity)
+              () => this.props.decQuantity(this.props.id, this.props.quantity)
             }>
             -
             </button>
@@ -120,7 +121,7 @@ class BasketItem extends Component {
               width: '100px',
               textAlign: 'center'
             }}
-            onClick={() => this.props.removeItem(this.props.name)}
+            onClick={() => this.props.removeItem(this.props.id)}
             className="button-fade">
               Remove {this.props.name}?
             </button>
@@ -140,13 +141,26 @@ class Basket extends Component {
     this.incQuantity = this.incQuantity.bind(this);
     this.decQuantity = this.decQuantity.bind(this);
     this.removeItem = this.removeItem.bind(this);
+    this.getItems = this.getItems.bind(this);
     this.state = {};
+  }
+
+  getItems(){
+    return getBasketItems().map((item, i) =>
+                    <BasketItem
+                      key={i}
+                      incQuantity={this.incQuantity}
+                      decQuantity={this.decQuantity}
+                      removeItem={this.removeItem}
+                      {...item}
+                    />);
   }
 
   // TODO: Raise error if user tried to go below 0.
   decQuantity(name, quantity){
     changeProductQuantity(name.toLowerCase(), Math.max(quantity - 1, 0));
     this.setState(this.state);
+    this.items =
     this.props.update();
   }
 
@@ -159,6 +173,7 @@ class Basket extends Component {
 
   removeItem(name){
     console.log("Removing", name);
+    toast.info(`Removed ${name} from basket.`);
     removeProductFromBasket(name.toLowerCase());
     this.setState(this.state);
     this.props.update();
@@ -170,27 +185,28 @@ class Basket extends Component {
         <div className="basket-header">
           <h2>Your Basket</h2>
 
-          <table>
-          <tbody>
-          <tr>
-            <th>Added Item</th>
-            <th>Size</th>
-            <th>Quantity</th>
-            <th>Price</th>
-          </tr>
           {
-            getBasketItems().map((item, i) =>
-            <BasketItem
-              key={i}
-              incQuantity={this.incQuantity}
-              decQuantity={this.decQuantity}
-              removeItem={this.removeItem}
-              {...item}
-            />
-          )
+            this.getItems().length > 0 ?
+              <table>
+              <tbody>
+              <tr>
+                <th>Added Item</th>
+                <th>Size</th>
+                <th>Quantity</th>
+                <th>Price</th>
+              </tr>
+              {
+                this.getItems().length > 0 ? this.getItems() : ""
+              }
+            </tbody>
+            </table>
+            : <h2 style={{
+              width: '100%',
+              textAlign: 'center',
+              margin: '50px 0px 50px 0px'
+            }} >No items.</h2>
           }
-        </tbody>
-        </table>
+
 
         {this.props.children}
 
@@ -205,15 +221,15 @@ class Basket extends Component {
 class BasketButton extends Component {
   constructor(props, context){
     super(props, context);
-    console.log(getProductDetails());
-    createEmptyBasket();
-    addToBasket("apples", 3);
-    addToBasket("bananas", 2);
+    // console.log(getProductDetails());
+    // createEmptyBasket();
+    // addToBasket("apples", 3);
+    // addToBasket("bananas", 2);
 
-    console.log(readBasket());
+    // console.log(readBasket());
     this.state = {
       totalCost: 0,
-      basketVisible: true,
+      basketVisible: false,
     }
     this.toggleBasket = this.toggleBasket.bind(this);
   }

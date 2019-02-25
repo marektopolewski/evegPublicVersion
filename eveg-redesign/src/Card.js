@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import {AddToCartButton} from './Asset';
 import {addToBasket, getProductDetails} from './model';
-
 import Select from 'react-select';
 import Modal from 'react-awesome-modal';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 export default class Card extends Component {
 
