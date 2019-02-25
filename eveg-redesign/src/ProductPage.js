@@ -3,9 +3,7 @@ import Navigation from './Navigation';
 import Footer from './Footer';
 import Card from './Card';
 import { getProductList, getProductDetails } from "./model";
-
 import Select from 'react-select';
-import { ToastContainer } from "react-toastify";
 
 export default class ProductPage extends Component {
 
@@ -32,7 +30,7 @@ export default class ProductPage extends Component {
     var fullList = Object.values(this.orgDetailList);
     if (selectedOrdering.value === 1) {
       this.state.prodList.sort();
-    } 
+    }
     else if (selectedOrdering.value === 2) {
       this.state.prodList.sort().reverse();
     }
@@ -121,7 +119,6 @@ export default class ProductPage extends Component {
         </div>
 
         <Footer style={{ position: 'unset' }} />
-        <ToastContainer />
       </div>
     );
   }

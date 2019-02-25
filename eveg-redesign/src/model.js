@@ -241,6 +241,7 @@ function getBasketItems(){
     if (counts[product] !== "0") items.push(
       {
         ...productDetails[product],
+        id: product,
         quantity: parseInt(counts[product])
       }
     )
@@ -250,7 +251,7 @@ function getBasketItems(){
 
 function getTotalBasketCost(){
   console.log(getBasketItems());
-  return getBasketItems().map(item => item.quantity*item.price).reduce((acc, curr) => curr + acc);
+  return getBasketItems().map(item => item.quantity*item.price).reduce((acc, curr) => curr + acc, 0);
 }
 
 function formatPrice(cost){

@@ -124,13 +124,14 @@ div.basket-nav-container {
 div.basket-container {
   /* width: 400px; */
     /* height: 300px; */
+    min-width: 500px;
     background-color: white;
     position: absolute;
     right: 10px;
     top: 60px;
     background: #FFFFFF;
     box-shadow: 0 1px 14px 0 rgba(0,0,0,0.10);
-    z-index: 1;
+    z-index: 10;
 }
 
 table {
