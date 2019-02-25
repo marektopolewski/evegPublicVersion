@@ -10,7 +10,8 @@ export default class PaymentPage extends Component {
   constructor(props, context){
     super(props, context);
     this.state = {
-      numberValue: ""
+      numberValue: "",
+      form: {}
     }
   }
 
@@ -50,7 +51,7 @@ export default class PaymentPage extends Component {
 
         <h2> Personal Details </h2>
 
-        <Form>
+        <Form onChange={(e) => console.log(e)}>
         <Form.Group>
           <Form.Input label="First Name" placeholder="First Name" />
           <Form.Input label="Last Name" placeholder="Last Name" />
@@ -59,13 +60,9 @@ export default class PaymentPage extends Component {
           <Form.Input type="email" label="Email" placeholder="john.smith@example.com" />
           <Form.Input label="Phone Number" value={this.state.numberValue} onChange={(e) => this.setState({numberValue: e.target.value.replace(/^\d+$/g, '')})} type="tel" placeholder='+XX XXX XXX XXXX' />
         </Form.Group>
-        </Form>
-
         <h2 style={{
           marginTop: '30px',
         }} >Billing information</h2>
-
-        <Form>
         <Form.Group>
           <Form.Input label="Address Line 1" placeholder="University Of Warwick" />
           <Form.Input label="Card Number" placeholder="XXXX-XXXX-XXXX-XXXX" />
