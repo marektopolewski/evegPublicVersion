@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Navigation from './Navigation';
-import Footer from './Footer';
 import Card from './Card';
 import { getProductList, getProductDetails } from "./model";
 import Select from 'react-select';
@@ -12,7 +10,7 @@ export default class ProductPage extends Component {
     this.state = {
         selectedDisplay: 0,
         selectedOrdering: 0,
-        prodBoxWidth: '1100px',
+        display: "tall",
         prodList: getProductList()
     };
     this.orgProdList = getProductList();
@@ -21,7 +19,7 @@ export default class ProductPage extends Component {
 
   changeDisplay = (selectedDisplay) => {
     this.setState({ selectedDisplay });
-    this.state.prodBoxWidth = selectedDisplay.value===0 ? '1100px' : '550px';
+    this.state.display = selectedDisplay.value===0 ? "tall" : "wide";
   };
 
   changeOrdering = (selectedOrdering) => {
@@ -103,21 +101,22 @@ export default class ProductPage extends Component {
     );
 
     return (
-      <div className="product-page-container">
-
-        <div className="products-container" style={{maxWidth:this.state.prodBoxWidth}}>
-
-          <div className="select-div">
-            <DisplaySelect />
-            <OrderingSelect />
+        <div className="products-container">
+          <div className="product-page-header">
+              <div className="product-page-title">
+                <div><h1>Products</h1></div>
+                <div className="product-page-description">Select your items below</div>
+              </div>
+              <div className="select-div">
+                <DisplaySelect />
+                <OrderingSelect />
+            </div>
           </div>
 
           {this.state.prodList.map((item, i) =>
-            <Card itemID = {item} updates={() => this.setState(this.state)} />
+            <Card itemID = {item} display={this.state.display} updates={() => this.setState(this.state)} />
           )}
         </div>
-
-      </div>
     );
   }
 }

@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { Basket } from './Basket';
 import { Link } from "react-router-dom";
 import { getTotalBasketCost, formatPrice, calculateTotals } from './model';
-import Navigation from './Navigation';
-import { Step, Icon } from 'semantic-ui-react';
-import Footer from './Footer';
+import { Step } from 'semantic-ui-react';
 
 
 export default class CheckoutPage extends Component {
