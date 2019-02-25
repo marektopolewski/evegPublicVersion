@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import Navigation from './Navigation';
 import { Link } from "react-router-dom";
-import { Step, Icon, Form, Button } from 'semantic-ui-react';
+import { Step, Form } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
-import Footer from './Footer';
 
 export default class PaymentPage extends Component {
 

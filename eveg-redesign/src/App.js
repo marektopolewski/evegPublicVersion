@@ -6,7 +6,6 @@ import ProductPage from './ProductPage';
 import CheckoutPage from './CheckoutPage';
 import PaymentPage from './PaymentPage';
 import { ToastContainer } from "react-toastify";
-import logo from './logo.svg';
 import './model.js';
 import './App.css';
 import './Resets.css';
@@ -29,9 +28,7 @@ class App extends Component {
           ({history}) => <PaymentPage history={history} />
         } />
         <ToastContainer />
-        <Footer style={{
-          position: 'unset'
-        }} />
+        <Footer />
       </div>
       </Router>
     );
