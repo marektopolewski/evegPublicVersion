@@ -295,13 +295,14 @@ button.active > svg {
 }
 
 .product-page-title {
-  margin-left: 2%;
+  margin-left: 5%;
 }
 
 .select-div {
   margin-top: 10px;
-  margin-right: 1%;
+  margin-right: 4%;
   display: flex;
+  flex-flow: row wrap;
   justify-content: flex-end;
 }
 
@@ -310,7 +311,7 @@ button.active > svg {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
-  max-width: 1100px;
+  max-width: 80%;
 }
 
 .select-order-div {
@@ -324,12 +325,20 @@ button.active > svg {
 }
 
 /*------------ Item card styling -----------------*/
-.card-container {
+.card-container-tall {
   margin-top: 20px;
   height: 320px;
   width: 250px;
   border: #00000017 solid 2px ;
   border-radius: 5%;
+}
+
+.card-container-wide {
+    margin-top: 20px;
+    height: 154px;
+    width: 500px;
+    border: #00000017 solid 2px ;
+    border-radius: 5%;
 }
 
 .card-image-div {
@@ -352,9 +361,14 @@ button.active > svg {
   max-width: 100%;
 }
 
-.card-title {
+.card-title-tall {
   margin: 15px 0 0 10px;
   font-size: 120%;
+}
+
+.card-title-wide {
+    margin: 10px 0 0 10px;
+    font-size: 120%;
 }
 
 .card-expiry {
@@ -363,16 +377,28 @@ button.active > svg {
   color: rgba(39, 39, 39, 0.5);
 }
 
-.card-price-td {
+.card-price-td-tall {
   padding: 20px 0 0 20px;
   font-weight: bold;
   font-size: 200%;
 }
 
-.card-form-td {
+.card-price-td-wide {
+    padding: 10px 0 0 20px;
+    font-weight: bold;
+    font-size: 200%;
+}
+
+.card-form-td-tall {
   color: rgba(39, 39, 39, 0.5);
   padding-top: 20px;
   font-size: 90%;
+}
+
+.card-form-td-wide {
+    color: rgba(39, 39, 39, 0.5);
+    padding-top: 10px;
+    font-size: 90%;
 }
 
 .card-add-to-cart {
