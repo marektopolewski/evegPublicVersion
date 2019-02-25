@@ -36,7 +36,7 @@ export default class CheckoutPage extends Component {
 
           <Step>
             <Step.Content>
-              <Step.Title>Confirm Order</Step.Title>
+              <Step.Title>Order Confirmation</Step.Title>
             </Step.Content>
           </Step>
         </Step.Group>

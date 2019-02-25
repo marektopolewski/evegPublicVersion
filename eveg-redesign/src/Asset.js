@@ -205,12 +205,32 @@ className="button-fade general-button">
   {children}
 </button>
 
+const SuccessIcon = () => <svg width='80' height='80' viewBox='0 0 104 104' xmlns='http://www.w3.org/2000/svg'>
+    <g id='eVeg-Mockups' fill='none' fillRule='evenodd'>
+        <g id='Confirmation-page' transform='translate(-660 -490)'>
+            <g id='Group-5' transform='translate(254 490)'>
+                <g id='Group-4' transform='translate(342)'>
+                    <g id='Group-6' transform='translate(64)'>
+                        <circle id='Oval' fill='#7ED321' cx='52' cy='52' r='52' />
+                        <g id='np_check-mark_888686_000000' transform='translate(31 33)' fillRule='nonzero'
+                        fill='#FFF'>
+                            <polygon id='Shape' points='12.6279759 38.0689639 0.082 25.522988 4.2630361 21.3419519 12.6279759 29.7068917 41.9009639 0.431036095 46.082 4.61486815'
+                            />
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
+
 
 export {
   LogoNav,
   FooterIcon,
   CartIconNav,
-  CloseIcon ,
+  CloseIcon,
+  SuccessIcon,
   PayPalLogo,
   CardLogos,
   AddToCartButton,

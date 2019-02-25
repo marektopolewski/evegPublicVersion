@@ -4,6 +4,7 @@ import Navigation from './Navigation';
 import Footer from './Footer';
 import ProductPage from './ProductPage';
 import CheckoutPage from './CheckoutPage';
+import ConfirmationPage from './ConfirmationPage';
 import PaymentPage from './PaymentPage';
 import { ToastContainer } from "react-toastify";
 import './model.js';
@@ -18,6 +19,10 @@ class App extends Component {
     super(props, context);
     this.state = {};
     this.updates = this.updates.bind(this);
+    this.order = {
+      paymentDetails: {},
+      items: []
+    };
   }
 
   updates(){
@@ -36,7 +41,11 @@ class App extends Component {
           ({history}) => <CheckoutPage updates={this.updates} history={history} />
         } />
       <Route exact path="/payment" component={
-          ({history}) => <PaymentPage updates={this.updates} history={history} />
+          ({history}) => <PaymentPage order={this.order} updates={this.updates} history={history} />
+        } />
+
+      <Route exact path="/confirmation" component={
+          ({history}) => <ConfirmationPage order={this.order} updates={this.updates} history={history} />
         } />
         <ToastContainer />
         <Footer />

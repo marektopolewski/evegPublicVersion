@@ -199,6 +199,25 @@ button.active > svg {
   opacity: 1;
 }
 
+/* -------------------- Confirmation Page styling -------------------- */
+div.confirmation-page-content-container {
+  margin-top: 30px;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+div.confirmation-page-header-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+
 /* -------------------- Footer styling -------------------- */
 .footer {
   background-color: #363841;

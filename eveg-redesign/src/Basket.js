@@ -69,62 +69,70 @@ class BasketItem extends Component {
             display: 'flex',
             alignItems: 'center'
           }}>
-          <button style={{
-            marginLeft: '10px',
-            marginRight: '10px'
-          }} className="number-picker button-fade" onClick={
-            () => this.props.incQuantity(this.props.id, this.props.quantity)
-          }>+</button>
+
+          {
+            !this.props.noedit ?     <button style={{
+                  marginLeft: '10px',
+                  marginRight: '10px'
+                }} className="number-picker button-fade" onClick={
+                  () => this.props.incQuantity(this.props.id, this.props.quantity)
+                }>+</button> : ""
+
+          }
+
           {this.props.quantity}
-            <button
-            {
-              ...Object(
-                this.props.quantity > 1 ? {} : {
-                'data-tooltip': "Cannot reduce product quantity to 0. Remove instead."
-                }
-              )
-            }
-            style={{
-              marginLeft: '10px',
-              marginRight: '10px',
-            }}
-            disabled={this.props.quantity >1 ? false : true}
-            className="number-picker button-fade" onClick={
-              () => this.props.decQuantity(this.props.id, this.props.quantity)
-            }>
-            -
-            </button>
+
+          {
+            !this.props.noedit ?   <button
+              {
+                ...Object(
+                  this.props.quantity > 1 ? {} : {
+                  'data-tooltip': "Cannot reduce product quantity to 0. Remove instead."
+                  }
+                )
+              }
+              style={{
+                marginLeft: '10px',
+                marginRight: '10px',
+              }}
+              disabled={this.props.quantity >1 ? false : true}
+              className="number-picker button-fade" onClick={
+                () => this.props.decQuantity(this.props.id, this.props.quantity)
+              }>
+              -
+              </button> : ""
+          }
           </div>
           </td>
           <td>{`£${(this.props.price * this.props.quantity).toFixed(2)}`}</td>
           <td>
           {
-            !this.state.pendingConfirmation ?
-            <button
-            style={{
-              width: '100px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-            onClick={this.promptConfirmation}
-            className="button-fade">
-              <CloseIcon style={{
-                height: '15px',
-                width: '15px',
-                fill: '#464646'
-              }} />
-            </button>
-            :
-            <button
-            style={{
-              width: '100px',
-              textAlign: 'center'
-            }}
-            onClick={() => this.props.removeItem(this.props.id)}
-            className="button-fade">
-              Remove {this.props.name}?
-            </button>
+            !this.props.noedit ? (!this.state.pendingConfirmation ?
+              <button
+              style={{
+                width: '100px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+              onClick={this.promptConfirmation}
+              className="button-fade">
+                <CloseIcon style={{
+                  height: '15px',
+                  width: '15px',
+                  fill: '#464646'
+                }} />
+              </button>
+              :
+              <button
+              style={{
+                width: '100px',
+                textAlign: 'center'
+              }}
+              onClick={() => this.props.removeItem(this.props.id)}
+              className="button-fade">
+                Remove {this.props.name}?
+              </button>) : ""
           }
 
           </td>
@@ -132,8 +140,6 @@ class BasketItem extends Component {
   }
 
 }
-
-
 
 class Basket extends Component {
   constructor(props, context){
@@ -146,8 +152,9 @@ class Basket extends Component {
   }
 
   getItems(){
-    return getBasketItems().map((item, i) =>
+    return (this.props.items ? this.props.items : getBasketItems()).map((item, i) =>
                     <BasketItem
+                      noedit={this.props.noedit}
                       key={i}
                       incQuantity={this.incQuantity}
                       decQuantity={this.decQuantity}
@@ -183,7 +190,7 @@ class Basket extends Component {
     return (
       <div style={this.props.style} className="basket-container">
         <div className="basket-header">
-          <h2>Your Basket</h2>
+          <h2>{this.props.title ? this.props.title : "Your Basket"}</h2>
 
           {
             this.getItems().length > 0 ?

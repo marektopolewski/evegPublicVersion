@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { Step, Form } from 'semantic-ui-react';
+import { createEmptyBasket, getBasketItems } from './model';
 import 'semantic-ui-css/semantic.min.css';
 
 export default class PaymentPage extends Component {
@@ -12,17 +13,37 @@ export default class PaymentPage extends Component {
       form: {}
     }
     this.updateInfo = this.updateInfo.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  updateInfo(e, updated){
-    this.setState({
-      ...this.state,
-      form: {
-        ...this.state.form,
-        ...updated
-      }
-    });
-    console.log(this.state);
+  updateInfo(e, {name, value}){
+
+    // var updatedField = {};
+    // updatedField[updated.name] = updated.value;
+
+    // this.setState({
+    //   ...this.state,
+    //   form: {
+    //     ...this.state.form,
+    //     ...updatedField
+    //   }
+    // });
+    // console.log(this.state);
+    this.props.order.paymentDetails[name] = value;
+    console.log(this.props.order.paymentDetails);
+  }
+
+  handleSubmit(e){
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Perform form validation.
+
+    // Clear the basket & save items in the order object.
+    this.props.order.items = getBasketItems();
+    createEmptyBasket();
+    this.props.history.push('/confirmation');
   }
 
   render(){
@@ -51,7 +72,7 @@ export default class PaymentPage extends Component {
 
           <Step>
             <Step.Content>
-              <Step.Title>Confirm Order</Step.Title>
+              <Step.Title>Order Confirmation</Step.Title>
             </Step.Content>
           </Step>
         </Step.Group>
@@ -61,7 +82,7 @@ export default class PaymentPage extends Component {
 
         <h2> Personal Details </h2>
 
-        <Form>
+        <Form onSubmit={this.handleSubmit}>
         <Form.Group>
           <Form.Input onChange={this.updateInfo} name="firstName" label="First Name" placeholder="First Name" />
           <Form.Input onChange={this.updateInfo} name="lastName" label="Last Name" placeholder="Last Name" />
