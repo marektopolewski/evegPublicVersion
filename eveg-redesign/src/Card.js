@@ -51,6 +51,14 @@ export default class Card extends Component {
         this.setState({ selectedOption });
     };
 
+    onSelectKeyDown(event) {
+        switch (event.keyCode) {
+            case 13: // ENTER
+                this.addBasketWrapper(this.props, this.state.selectedOption);
+                break;
+        }
+    }
+
     render(){
         const { selectedOption } = this.state;
 
@@ -112,6 +120,7 @@ export default class Card extends Component {
                             onChange={this.handleChange}
                             options={options}
                             placeholder={"1"}
+                            onKeyDown = {(event) => {this.onSelectKeyDown(event)}}
                         />
                     </div>
                     <div className="add-button-div" onClick={() => {
