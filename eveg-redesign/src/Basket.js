@@ -180,7 +180,7 @@ class Basket extends Component {
 
   removeItem(name){
     console.log("Removing", name);
-    toast.info(`Removed ${name} from basket.`);
+    toast.info(`Removed ${name} from basket.`, { autoClose : 2000 });
     removeProductFromBasket(name.toLowerCase());
     this.setState(this.state);
     this.props.update();
