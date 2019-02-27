@@ -95,15 +95,12 @@ function readBasket() {
   return basket;
 }
 
-function calculateTotals() {
-  var basket = readBasket();
-  var productDetails = getProductDetails();
+function calculateTotals(items) {
 
-  var total = 0;
-  for (var product in basket) {
-    total += parseInt(basket[product]) * parseFloat(productDetails[product]["price"]);
-  }
+  if (!items) items = getBasketItems();
 
+  var total = items.reduce((accumulator, current) => accumulator + (current.price*current.quantity), 0);
+  // var
   var totals = {};
   totals["total"] = total.toString();
   totals["vat"] = (total - total / 1.175).toString();

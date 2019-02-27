@@ -55,7 +55,7 @@ export default class PaymentPage extends Component {
         <h1> Payment </h1>
         <h2> Enter your billing information below </h2>
 
-        <Step.Group ordered>
+        <Step.Group ordered link onClick={() => this.props.order.items.length === 0 ? this.props.history.push('/checkout') : ""}>
           <Step completed>
             <Step.Content>
               <Step.Title>Summary</Step.Title>
@@ -84,30 +84,30 @@ export default class PaymentPage extends Component {
 
         <Form onSubmit={this.handleSubmit}>
         <Form.Group>
-          <Form.Input onChange={this.updateInfo} name="firstName" label="First Name" placeholder="First Name" />
-          <Form.Input onChange={this.updateInfo} name="lastName" label="Last Name" placeholder="Last Name" />
+          <Form.Input required onChange={this.updateInfo} name="firstName" label="First Name" placeholder="First Name" />
+          <Form.Input required onChange={this.updateInfo} name="lastName" label="Last Name" placeholder="Last Name" />
         </Form.Group>
         <Form.Group>
           <Form.Input onChange={this.updateInfo} name="email" type="email" label="Email" placeholder="john.smith@example.com" />
-          <Form.Input onChange={this.updateInfo} name="phoneNumber" label="Phone Number" value={this.state.numberValue} onChange={(e) => this.setState({numberValue: e.target.value.replace(/^\d+$/g, '')})} type="tel" placeholder='+XX XXX XXX XXXX' />
+          <Form.Input required onChange={this.updateInfo} name="phoneNumber" label="Phone Number" value={this.state.numberValue} onChange={(e) => this.setState({numberValue: e.target.value.replace(/^\d+$/g, '')})} type="tel" placeholder='+XX XXX XXX XXXX' />
         </Form.Group>
         <h2 style={{
           marginTop: '30px',
         }} >Billing information</h2>
         <Form.Group>
-          <Form.Input onChange={this.updateInfo} name="address1" label="Address Line 1" placeholder="University Of Warwick" />
-          <Form.Input onChange={this.updateInfo} name="cardNumber" label="Card Number" placeholder="XXXX-XXXX-XXXX-XXXX" />
+          <Form.Input required onChange={this.updateInfo} name="address1" label="Address Line 1" placeholder="University Of Warwick" />
+          <Form.Input required onChange={this.updateInfo} name="cardNumber" label="Card Number" placeholder="XXXX-XXXX-XXXX-XXXX" />
         </Form.Group>
         <Form.Group>
           <Form.Input onChange={this.updateInfo} name="address2" label="Address Line 2" placeholder="University Of Warwick" />
-          <Form.Input onChange={this.updateInfo} name="securityCode" label="Security Code" placeholder="xxx" />
-          <Form.Input onChange={this.updateInfo} name="expiryDate" label="Expiry Date" placeholder="MM / YYYY" />
+          <Form.Input required onChange={this.updateInfo} name="securityCode" label="Security Code" placeholder="xxx" />
+          <Form.Input required onChange={this.updateInfo} name="expiryDate" label="Expiry Date" placeholder="MM / YYYY" />
 
         </Form.Group>
 
         <Form.Group>
-          <Form.Input onChange={this.updateInfo} name="country" label="Country" placeholder="United Kingdom" />
-          <Form.Input onChange={this.updateInfo} name="cardName" label="Name on card" placeholder="John Smith" />
+          <Form.Input required onChange={this.updateInfo} name="country" label="Country" placeholder="United Kingdom" />
+          <Form.Input required onChange={this.updateInfo} name="cardName" label="Name on card" placeholder="John Smith" />
         </Form.Group>
 
         <Form.Group>

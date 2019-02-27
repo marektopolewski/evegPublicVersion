@@ -75,13 +75,13 @@ export default class ConfirmationPage extends Component {
                     <td> Total excluding VAT </td>
                     <td>
                       <p style={{width: 'fit-content', marginLeft: 'auto'}}>
-                        { formatPrice(parseInt(calculateTotals()['totalnovat'])) }
+                        { formatPrice(parseInt(calculateTotals(this.props.order.items)['totalnovat'])) }
                       </p>
                     </td>
                   </tr>
                   <tr>
                     <td><h2 style={{margin: 0, marginLeft: 'auto', fontWeight: 'normal'}}>Total</h2></td>
-                    <td><h2 style={{width: 'fit-content', margin: 0, marginLeft: 'auto'}}>{formatPrice(getTotalBasketCost())}</h2></td>
+                    <td><h2 style={{width: 'fit-content', margin: 0, marginLeft: 'auto'}}>{formatPrice(parseInt(calculateTotals(this.props.order.items)['total']))}</h2></td>
                   </tr>
                 </tbody>
               </table>
