@@ -10,6 +10,7 @@ export default class Card extends Component {
     state = {
         selectedOption: {label:1, value:1},
         visible: false,
+        options: null,
     };
 
     openModal() {
@@ -47,10 +48,22 @@ export default class Card extends Component {
     };
 
     onSelectKeyDown(event) {
-        if (event.keyCode===13) {
+        if (event.keyCode===13) {           // enter
             this.addBasketWrapper(this.props, this.state.selectedOption);
         }
+        else if (event.keyCode===40) {      // arrow down
+            const curIndex  = this.state.selectedOption.value - 1;
+            const nextIndex = (curIndex + 1) % this.state.options.length;
+            this.handleChange(this.state.options[nextIndex]);
+        }
+        else if (event.keyCode===38) {      // arrow up
+            const curIndex  = this.state.selectedOption.value - 1;
+            const nextIndex = curIndex === 0 ? this.state.options.length-1 : curIndex-1;
+            this.handleChange(this.state.options[nextIndex]);
+        }
+        return true;
     }
+
 
     render(){
         const { selectedOption } = this.state;
@@ -64,9 +77,9 @@ export default class Card extends Component {
 
         const maxAmount = item.maxAmount>0 ? item.maxAmount : 100;
         var i;
-        var options = [];
+        this.state.options = [];
         for (i = 1; i <= maxAmount; i++) {
-            options.push({label:i, value: i})
+            this.state.options.push({label:i, value: i})
         }
 
         const image = (
@@ -117,9 +130,10 @@ export default class Card extends Component {
                             classNamePrefix="select-quantity-dropdown"
                             value={selectedOption}
                             onChange={this.handleChange}
-                            options={options}
+                            options={this.state.options}
                             placeholder={"1"}
                             onKeyDown = {(event) => {this.onSelectKeyDown(event)}}
+                            maxMenuHeight = {"150px"}
                         />
                     </div>
                     <div className="add-button-div" onClick={() => {

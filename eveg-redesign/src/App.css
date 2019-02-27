@@ -413,9 +413,9 @@ div.confirmation-page-header-container {
   width: 90px;
 }
 
-.select-quantity-dropdown__menu-list {
-  height: 150px;
-}
+/*.select-quantity-dropdown__menu-list {*/
+  /*height: 150px;*/
+/*}*/
 
 .card-add-svg {
   margin-left: -20px;
