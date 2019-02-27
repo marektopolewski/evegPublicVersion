@@ -27,7 +27,6 @@ export default class Card extends Component {
     addBasketWrapper(product, selectedOption) {
 
         const quantity = selectedOption===null ? -1 : selectedOption.value;
-        console.log("selected="+selectedOption.value);
         if (quantity<1 || quantity===undefined) {
             toast.info("Please specify the quantity.", {
                 position: toast.POSITION.TOP_CENTER
@@ -41,8 +40,6 @@ export default class Card extends Component {
         this.setState({ selectedDisplay : 1 });
         addToBasket(this.props.itemID, quantity);
         this.props.updates();
-
-        console.log('Added ' + product + ' in quantity ' + quantity);
     }
 
     handleChange = (selectedOption) => {

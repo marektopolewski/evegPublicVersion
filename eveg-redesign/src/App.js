@@ -6,6 +6,7 @@ import ProductPage from './ProductPage';
 import CheckoutPage from './CheckoutPage';
 import ConfirmationPage from './ConfirmationPage';
 import PaymentPage from './PaymentPage';
+import FaqPage from './FaqPage';
 import { ToastContainer } from "react-toastify";
 import './model.js';
 import './App.css';
@@ -46,6 +47,10 @@ class App extends Component {
 
       <Route exact path="/confirmation" component={
           ({history}) => <ConfirmationPage order={this.order} updates={this.updates} history={history} />
+        } />
+
+      <Route exact path="/faq" component={
+          ({history}) => <FaqPage history={history} />
         } />
         <ToastContainer />
         <Footer />
