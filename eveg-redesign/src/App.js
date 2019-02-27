@@ -7,6 +7,7 @@ import CheckoutPage from './CheckoutPage';
 import ConfirmationPage from './ConfirmationPage';
 import PaymentPage from './PaymentPage';
 import FaqPage from './FaqPage';
+import ClickAndCollectPage from './ClickAndCollectPage';
 import { ToastContainer } from "react-toastify";
 import './model.js';
 import './App.css';
@@ -51,6 +52,10 @@ class App extends Component {
 
       <Route exact path="/faq" component={
           ({history}) => <FaqPage history={history} />
+        } />
+
+      <Route exact path="/click-and-collect" component={
+          ({history}) => <ClickAndCollectPage history={history} />
         } />
         <ToastContainer />
         <Footer />
