@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import InputMask from 'react-input-mask';
 import { Step, Form } from 'semantic-ui-react';
 import { createEmptyBasket, getBasketItems } from './model';
 import 'semantic-ui-css/semantic.min.css';
@@ -80,28 +81,40 @@ export default class PaymentPage extends Component {
 
         <div className="payment-form-container">
 
-        <h2> Personal Details </h2>
-
         <Form onSubmit={this.handleSubmit}>
+        <h2> Personal Details </h2>
+        <p> Your personal details are used to manage your order. </p>
+
         <Form.Group>
           <Form.Input required onChange={this.updateInfo} name="firstName" label="First Name" placeholder="First Name" />
           <Form.Input required onChange={this.updateInfo} name="lastName" label="Last Name" placeholder="Last Name" />
         </Form.Group>
         <Form.Group>
           <Form.Input onChange={this.updateInfo} name="email" type="email" label="Email" placeholder="john.smith@example.com" />
-          <Form.Input required onChange={this.updateInfo} name="phoneNumber" label="Phone Number" value={this.state.numberValue} onChange={(e) => this.setState({numberValue: e.target.value.replace(/^\d+$/g, '')})} type="tel" placeholder='+XX XXX XXX XXXX' />
+
+          <InputMask mask="9999 999 9999" value={this.state.numberValue} onChange={this.updateInfo}>
+            {({inputProps}) =>
+              <Form.Input {...inputProps} required name="phoneNumber" label="Phone Number" type="tel" placeholder='+XX XXX XXX XXXX' />
+            }
+          </InputMask>
         </Form.Group>
         <h2 style={{
           marginTop: '30px',
         }} >Billing information</h2>
+
+        <p> Enter your payment details below. Payment will occur before collection. </p>
         <Form.Group>
           <Form.Input required onChange={this.updateInfo} name="address1" label="Address Line 1" placeholder="University Of Warwick" />
-          <Form.Input required onChange={this.updateInfo} name="cardNumber" label="Card Number" placeholder="XXXX-XXXX-XXXX-XXXX" />
+          <InputMask mask="9999-9999-9999-9999" value={this.state.numberValue} onChange={this.updateInfo}>
+          {({inputProps}) =>
+            <Form.Input required name="cardNumber" label="Card Number" placeholder="XXXX-XXXX-XXXX-XXXX" />
+          }
+        </InputMask>
         </Form.Group>
         <Form.Group>
           <Form.Input onChange={this.updateInfo} name="address2" label="Address Line 2" placeholder="University Of Warwick" />
-          <Form.Input required onChange={this.updateInfo} name="securityCode" label="Security Code" placeholder="xxx" />
-          <Form.Input required onChange={this.updateInfo} name="expiryDate" label="Expiry Date" placeholder="MM / YYYY" />
+          <Form.Input tooltip="This is the security code at the back of your debit or credit card" width={3} required onChange={this.updateInfo} name="securityCode" label="CCV" placeholder="xxx" />
+          <Form.Input width={5} required onChange={this.updateInfo} name="expiryDate" label="Expiry Date" placeholder="MM / YYYY" />
 
         </Form.Group>
 
@@ -115,13 +128,6 @@ export default class PaymentPage extends Component {
           <Form.Input onChange={this.updateInfo} name="postcode" label="Postcode" placeholder="CV4 7AL" />
         </Form.Group>
 
-        <Form.Button content="submit" />
-
-        </Form>
-
-        </div>
-
-
         <div style={{
           marginBottom: '30px'
         }}  className="sub-basket-container">
@@ -130,16 +136,26 @@ export default class PaymentPage extends Component {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#FF435A'
+            backgroundColor: '#FF435A',
+            margin: '10px',
+            height: '36px',
           }} className="general-button" to="/">Cancel</Link>
-          <Link style={{
+
+          <Form.Button className="general-button" style={{
             width: '200px',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#7ED321'
-          }} className="general-button" to="/confirmation">Confirm Order</Link>
+            backgroundColor: '#7ED321',
+            color: 'white'
+          }} content="submit">Confirm Order</Form.Button>
+
         </div>
+
+        </Form>
+
+        </div>
+
       </div>
 
     );

@@ -138,6 +138,14 @@ div.payment-form-container {
   align-items: center;
 }
 
+.ui.form .fields>.field:first-child {
+  margin-right: 40px;
+}
+
+.ui.form .fields>.field:nth-child(2) {
+  margin-left: 40px;
+}
+
 /** Button styling for smooth animations on hover */
 button {
   cursor: pointer;
