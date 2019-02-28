@@ -255,12 +255,9 @@ class BasketButton extends Component {
       <button onClick={this.toggleBasket} className="button-hover">
         <CartIconNav />
       </button>
-        <p style={{
-          marginLeft: '15px',
-          fontWeight: 'bold'
-        }}>{
-          formatPrice(getTotalBasketCost())
-        }</p>
+      <div onClick={this.toggleBasket} className="navigation-basket-price">
+        { formatPrice(getTotalBasketCost()) }
+      </div>
 
 
       {

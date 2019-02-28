@@ -42,6 +42,18 @@ a.logo-nav p {
 
 
 /** Basket Styling */
+.navigation-basket-price {
+  color: #538EFF;
+  margin-left: 15px;
+  font-family: "Open Sans", sans-serif;
+  font-size: large;
+  font-weight: bold;
+}
+
+.navigation-basket-price:hover {
+  cursor: pointer;
+}
+
 div.sub-basket-container {
   display: flex;
   padding: 5px;
@@ -412,10 +424,6 @@ div.confirmation-page-header-container {
   height: 18px;
   width: 90px;
 }
-
-/*.select-quantity-dropdown__menu-list {*/
-  /*height: 150px;*/
-/*}*/
 
 .card-add-svg {
   margin-left: -20px;
