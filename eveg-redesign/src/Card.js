@@ -8,9 +8,10 @@ import { toast } from 'react-toastify';
 export default class Card extends Component {
 
     state = {
-        selectedOption: {label:1, value:1},
+        selectedOption: null,
         visible: false,
         options: null,
+        openSelect: null,
     };
 
     openModal() {
@@ -27,16 +28,18 @@ export default class Card extends Component {
 
     addBasketWrapper(product, selectedOption) {
 
-        const quantity = selectedOption===null ? -1 : selectedOption.value;
+        const quantity = selectedOption===null ? 1 : selectedOption.value;
         if (quantity<1 || quantity===undefined) {
             toast.info("Please specify the quantity.", {
-                position: toast.POSITION.TOP_CENTER
+                position: toast.POSITION.TOP_CENTER,
+                autoClose : 2500
             });
             return;
         }
 
-        toast.success("Item successfully added!", {
-            position: toast.POSITION.TOP_CENTER
+        toast.success("Added " + product.itemID + " to your cart!",{
+            position: toast.POSITION.TOP_CENTER,
+            autoClose : 2000
         });
         this.setState({ selectedDisplay : 1 });
         addToBasket(this.props.itemID, quantity);
@@ -47,21 +50,23 @@ export default class Card extends Component {
         this.setState({ selectedOption });
     };
 
-    onSelectKeyDown(event) {
-        if (event.keyCode===13) {           // enter
+    handleInputChange = (input) => {
+        const val = parseInt(input);
+        this.state.selectedOption = {label:val, value:val};
+    };
+
+    onSelectKeyDown(e) {
+        // enter
+        if (e.keyCode===13) {
             this.addBasketWrapper(this.props, this.state.selectedOption);
         }
-        else if (event.keyCode===40) {      // arrow down
-            const curIndex  = this.state.selectedOption.value - 1;
-            const nextIndex = (curIndex + 1) % this.state.options.length;
-            this.handleChange(this.state.options[nextIndex]);
+        // on digit
+        else if ((e.keyCode >= 65 && e.keyCode <= 90)
+            || (e.keyCode >= 106 && e.keyCode <= 111)
+            || (e.keyCode >= 186 && e.keyCode <= 222)) {
+            e.preventDefault();
+            e.stopPropagation();
         }
-        else if (event.keyCode===38) {      // arrow up
-            const curIndex  = this.state.selectedOption.value - 1;
-            const nextIndex = curIndex === 0 ? this.state.options.length-1 : curIndex-1;
-            this.handleChange(this.state.options[nextIndex]);
-        }
-        return true;
     }
 
 
@@ -87,6 +92,7 @@ export default class Card extends Component {
                 className="card-image-div"
                 style={{backgroundImage: `url('${item.image}')`, backgroundSize: `cover`}}
                 onClick={() => this.openModal()}
+                title={item.name + " thumbnail"}
             />
         );
 
@@ -125,15 +131,17 @@ export default class Card extends Component {
                     </tr></tbody></table>
                 </div>
                 <div className="card-add-to-cart">
-                    <div className="dropdown-div">
+                    <div className={"dropdown-div"}>
                         <Select
                             classNamePrefix="select-quantity-dropdown"
                             value={selectedOption}
                             onChange={this.handleChange}
+                            onInputChange = {this.handleInputChange}
                             options={this.state.options}
                             placeholder={"1"}
                             onKeyDown = {(event) => {this.onSelectKeyDown(event)}}
                             maxMenuHeight = {"150px"}
+                            isSearchable = {true}
                         />
                     </div>
                     <div className="add-button-div" onClick={() => {
