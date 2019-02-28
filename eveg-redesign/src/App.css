@@ -308,6 +308,7 @@ div.confirmation-page-header-container {
 
 .filling-empty-space-child {
   width: 250px;
+  margin-left: 10px;
   height:0;
 }
 

@@ -34,9 +34,9 @@ class App extends Component {
   render() {
     return (
       <Router>
-          <Switch>
-            <div className="App">
+          <div className="App">
               <Navigation />
+          <Switch>
               <Route exact path="/" component={
                 ({history}) => <ProductPage updates={this.updates} history={history} />
               } />
@@ -58,10 +58,10 @@ class App extends Component {
               <Route component={                                            /// default route
                   ({history}) => <ProductPage updates={this.updates} history={history} />
               } />
+          </Switch>
               <ToastContainer />
               <Footer />
-            </div>
-          </Switch>
+          </div>
       </Router>
     );
   }
