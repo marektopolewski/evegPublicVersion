@@ -14,7 +14,7 @@ export default class CheckoutPage extends Component {
   render(){
 
     return (
-      <div>
+      <div style = {{minHeight:`80%`}}>
         <div className="checkout-head-container">
 
         <h1> Checkout </h1>
@@ -57,11 +57,12 @@ export default class CheckoutPage extends Component {
           }} className="basket-cost-container">
             <table>
               <tbody>
-                <th></th>
-                <th><p style={{width: 'fit-content', marginLeft: 'auto'}}>Cost</p></th>
+                <tr><td colSpan={2} style={{textAlign:`right`}}>
+                    <p style={{width: 'fit-content', marginLeft:`auto`}}>Cost</p>
+                </td></tr>
                 <tr>
                   <td> Total excluding VAT </td>
-                  <td>
+                  <td style={{textAlign:`right`}}>
                     <p style={{width: 'fit-content', marginLeft: 'auto'}}>
                       { formatPrice(parseInt(calculateTotals()['totalnovat'])) }
                     </p>
@@ -69,7 +70,9 @@ export default class CheckoutPage extends Component {
                 </tr>
                 <tr>
                   <td><h2 style={{margin: 0, marginLeft: 'auto', fontWeight: 'normal'}}>Total</h2></td>
-                  <td><h2 style={{width: 'fit-content', margin: 0, marginLeft: 'auto'}}>{formatPrice(getTotalBasketCost())}</h2></td>
+                  <td style={{textAlign:`right`}}>
+                      <h2 style={{width: 'fit-content', margin: 0, marginLeft: 'auto'}}>{formatPrice(getTotalBasketCost())}</h2>
+                  </td>
                 </tr>
               </tbody>
             </table>

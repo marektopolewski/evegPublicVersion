@@ -61,6 +61,16 @@ div.sub-basket-container {
   margin-top: 10px;
 }
 
+@supports (-ms-ime-align:auto) { /* support for Edge */
+  div.sub-basket-container {
+    justify-content: space-around;
+  }
+
+  tr.basket-item-container {
+    border-bottom: 1px solid rgb(122, 122, 122);
+  }
+}
+
 div.basket-cost-container {
   display: flex;
   justify-content: center;

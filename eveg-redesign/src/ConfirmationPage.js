@@ -8,7 +8,8 @@ import { formatPrice, calculateTotals, getTotalBasketCost } from './model';
 export default class ConfirmationPage extends Component {
 
   render(){
-    return (<div className="confirmation-page-container">
+    return (
+     <div className="confirmation-page-container" style = {{minHeight:`80%`, marginBottom:`30px`}}>
 
       <div className="checkout-head-container">
 

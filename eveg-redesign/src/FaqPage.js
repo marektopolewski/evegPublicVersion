@@ -8,7 +8,7 @@ export default class FaqPage extends Component {
 
   render(){
     return (
-        <div style={{width:`80%`, marginLeft:`auto`, marginRight:`auto`, marginBottom:`30px`}}>
+        <div style={{minHeight:`80%`, width:`80%`, marginLeft:`auto`, marginRight:`auto`, marginBottom:`30px`}}>
           <h1>FAQ</h1>
 
           <h3>What is eVeg?</h3>
