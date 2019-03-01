@@ -26,7 +26,7 @@ function getProductDetails() {
 
   productDetails["apples"] = {};
   productDetails["apples"]["image"] = "https://www.lankaprincess.com/wp-content/uploads/2016/08/apples-768x480.jpg";
-  productDetails["apples"]["name"] = "Apple (Braeburn)";
+  productDetails["apples"]["name"] = "Apples (Braeburn)";
   productDetails["apples"]["description"] = "Red, sweet and juicy";
   productDetails["apples"]["units"] = "1kg";
   productDetails["apples"]["price"] = 1.49;
@@ -235,7 +235,7 @@ function getBasketItems(){
   var productDetails = getProductDetails();
   var items = [];
   for (var product in counts){
-    if (counts[product] !== "0") items.push(
+    if (counts[product] !== undefined && counts[product] !== "0") items.push(
       {
         ...productDetails[product],
         id: product,
@@ -247,8 +247,8 @@ function getBasketItems(){
 }
 
 function getTotalBasketCost(){
-  console.log(getBasketItems());
-  return getBasketItems().map(item => item.quantity*item.price).reduce((acc, curr) => curr + acc, 0);
+  var total =  getBasketItems().map(item => isNaN(item.quantity) ? 0 : item.quantity*item.price);
+  return total.reduce((acc, curr) => curr + acc, 0);
 }
 
 function formatPrice(cost){

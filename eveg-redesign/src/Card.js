@@ -8,8 +8,10 @@ import { toast } from 'react-toastify';
 export default class Card extends Component {
 
     state = {
-        selectedOption: {label:1, value:1},
+        selectedOption: null,
         visible: false,
+        options: null,
+        openSelect: null,
     };
 
     openModal() {
@@ -26,34 +28,47 @@ export default class Card extends Component {
 
     addBasketWrapper(product, selectedOption) {
 
-        const quantity = selectedOption===null ? -1 : selectedOption.value;
-        console.log("selected="+selectedOption.value);
+        const quantity = selectedOption===null ? 1 : selectedOption.value;
         if (quantity<1 || quantity===undefined) {
             toast.info("Please specify the quantity.", {
-                position: toast.POSITION.TOP_CENTER
+                position: toast.POSITION.TOP_CENTER,
+                autoClose : 2500
             });
             return;
         }
 
-        toast.success("Item successfully added!", {
-            position: toast.POSITION.TOP_CENTER
+        toast.success("Added " + product.itemID + " to your cart!",{
+            position: toast.POSITION.TOP_CENTER,
+            autoClose : 2000
         });
         this.setState({ selectedDisplay : 1 });
         addToBasket(this.props.itemID, quantity);
         this.props.updates();
-
-        console.log('Added ' + product + ' in quantity ' + quantity);
     }
 
     handleChange = (selectedOption) => {
         this.setState({ selectedOption });
     };
 
-    onSelectKeyDown(event) {
-        if (event.keyCode===13) {
+    handleInputChange = (input) => {
+        const val = parseInt(input);
+        this.state.selectedOption = {label:val, value:val};
+    };
+
+    onSelectKeyDown(e) {
+        // enter
+        if (e.keyCode===13) {
             this.addBasketWrapper(this.props, this.state.selectedOption);
         }
+        // on digit
+        else if ((e.keyCode >= 65 && e.keyCode <= 90)
+            || (e.keyCode >= 106 && e.keyCode <= 111)
+            || (e.keyCode >= 186 && e.keyCode <= 222)) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
     }
+
 
     render(){
         const { selectedOption } = this.state;
@@ -67,9 +82,9 @@ export default class Card extends Component {
 
         const maxAmount = item.maxAmount>0 ? item.maxAmount : 100;
         var i;
-        var options = [];
+        this.state.options = [];
         for (i = 1; i <= maxAmount; i++) {
-            options.push({label:i, value: i})
+            this.state.options.push({label:i, value: i})
         }
 
         const image = (
@@ -77,6 +92,7 @@ export default class Card extends Component {
                 className="card-image-div"
                 style={{backgroundImage: `url('${item.image}')`, backgroundSize: `cover`}}
                 onClick={() => this.openModal()}
+                title={item.name + " thumbnail"}
             />
         );
 
@@ -115,14 +131,17 @@ export default class Card extends Component {
                     </tr></tbody></table>
                 </div>
                 <div className="card-add-to-cart">
-                    <div className="dropdown-div">
+                    <div className={"dropdown-div"}>
                         <Select
                             classNamePrefix="select-quantity-dropdown"
                             value={selectedOption}
                             onChange={this.handleChange}
-                            options={options}
+                            onInputChange = {this.handleInputChange}
+                            options={this.state.options}
                             placeholder={"1"}
                             onKeyDown = {(event) => {this.onSelectKeyDown(event)}}
+                            maxMenuHeight = {"150px"}
+                            isSearchable = {true}
                         />
                     </div>
                     <div className="add-button-div" onClick={() => {

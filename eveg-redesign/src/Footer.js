@@ -9,8 +9,8 @@ export default class Footer extends Component {
                 <tr>
                     <td className="footer-small-td">
                         <p><b>Helpful Links</b></p>
-                        <p><a href="/">FAQ</a></p>
-                        <p><a href="/">Click & Collect</a></p>
+                        <p><a href="/faq/">FAQ</a></p>
+                        <p><a href="/click-and-collect/">Click & Collect</a></p>
                     </td>
                     <td className="footer-large-td">
                         <FooterIcon />

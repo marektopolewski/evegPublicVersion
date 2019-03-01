@@ -180,7 +180,7 @@ class Basket extends Component {
 
   removeItem(name){
     console.log("Removing", name);
-    toast.info(`Removed ${name} from basket.`);
+    toast.info(`Removed ${name} from basket.`, { autoClose : 2000 });
     removeProductFromBasket(name.toLowerCase());
     this.setState(this.state);
     this.props.update();
@@ -255,12 +255,9 @@ class BasketButton extends Component {
       <button onClick={this.toggleBasket} className="button-hover">
         <CartIconNav />
       </button>
-        <p style={{
-          marginLeft: '15px',
-          fontWeight: 'bold'
-        }}>{
-          formatPrice(getTotalBasketCost())
-        }</p>
+      <div onClick={this.toggleBasket} className="navigation-basket-price">
+        { formatPrice(getTotalBasketCost()) }
+      </div>
 
 
       {
