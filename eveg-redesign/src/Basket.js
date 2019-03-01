@@ -67,7 +67,8 @@ class BasketItem extends Component {
           <td>
           <div style={{
             display: 'flex',
-            alignItems: 'center'
+            alignItems: 'center',
+            width: '120px'
           }}>
 
           {
@@ -104,7 +105,9 @@ class BasketItem extends Component {
           }
           </div>
           </td>
-          <td>{`£${(this.props.price * this.props.quantity).toFixed(2)}`}</td>
+          <td style={{
+            width: '60px'
+          }} >{`£${(this.props.price * this.props.quantity).toFixed(2)}`}</td>
           <td>
           {
             !this.props.noedit ? (!this.state.pendingConfirmation ?
@@ -129,7 +132,10 @@ class BasketItem extends Component {
                 width: '100px',
                 textAlign: 'center'
               }}
-              onClick={() => this.props.removeItem(this.props.id)}
+              onClick={() => this.props.removeItem(this.props.id) || this.setState({
+                ...this.state,
+                pendingConfirmation: false
+              })}
               className="button-fade">
                 Remove {this.props.name}?
               </button>) : ""
@@ -180,7 +186,13 @@ class Basket extends Component {
 
   removeItem(name){
     console.log("Removing", name);
-    toast.info(`Removed ${name} from basket.`, { autoClose : 2000 });
+    toast.info(`Removed ${name} from basket.`,
+      {
+        // hideProgressBar: true,
+        // closeOnClick: true,
+        // pauseOnHover: false,
+        // draggable: false,
+    });
     removeProductFromBasket(name.toLowerCase());
     this.setState(this.state);
     this.props.update();
@@ -194,9 +206,10 @@ class Basket extends Component {
 
           {
             this.getItems().length > 0 ?
+            <div className="basket-wrapper">
               <table>
               <tbody>
-              <tr>
+              <tr className="basket-headings">
                 <th>Added Item</th>
                 <th>Size</th>
                 <th>Quantity</th>
@@ -207,6 +220,7 @@ class Basket extends Component {
               }
             </tbody>
             </table>
+            </div>
             : <h2 style={{
               width: '100%',
               textAlign: 'center',
@@ -252,10 +266,16 @@ class BasketButton extends Component {
     return (
       <div className="basket-nav-container">
 
-      <button onClick={this.toggleBasket} className="button-hover">
-        <CartIconNav />
+      <button disabled={this.props.disabled} onClick={this.toggleBasket} className="button-hover">
+        <CartIconNav style={!this.props.disabled ? {} : {
+          fill: 'rgba(0,0,0,0.2)'
+        }} />
       </button>
-      <div onClick={this.toggleBasket} className="navigation-basket-price">
+      <div style={
+        !this.props.disabled ? {} : {
+          color: 'rgba(0,0,0,0.2)'
+        }
+      } onClick={() => this.props.disabled ? "" : this.toggleBasket()} className="navigation-basket-price">
         { formatPrice(getTotalBasketCost()) }
       </div>
 
@@ -268,7 +288,7 @@ class BasketButton extends Component {
               <h2 style={{margin: 0, fontWeight: 'normal'}}>Total</h2>
               <h2 style={{margin: 0, marginLeft: '10px'}}>{formatPrice(getTotalBasketCost())}</h2>
             </div>
-            <Link to="/checkout" className="general-button" style={{
+            <Link onClick={this.toggleBasket} to="/checkout" className="general-button" style={{
               backgroundColor: '#4A90E2'
             }}>Proceed to checkout</Link>
           </div>

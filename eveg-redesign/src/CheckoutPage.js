@@ -27,7 +27,7 @@ export default class CheckoutPage extends Component {
             </Step.Content>
           </Step>
 
-          <Step>
+          <Step onClick={() => this.props.history ? this.props.history.push('/payment') : ""}>
             <Step.Content>
               <Step.Title>Payment</Step.Title>
               <Step.Description>Enter billing information</Step.Description>
@@ -44,7 +44,7 @@ export default class CheckoutPage extends Component {
 
         <div className="checkout-basket-container">
 
-          <Basket update={() => this.setState(this.state)} style={{
+          <Basket update={() => this.props.updates()} style={{
             boxShadow: 'none',
             position: 'unset',
             maxWidth: '700px',
@@ -78,11 +78,11 @@ export default class CheckoutPage extends Component {
           <div className="sub-basket-container">
 
             <Link to="/" className="general-button" style={{
-              backgroundColor: '#9B9B9B'
+              backgroundColor: '#4A90E2'
             }}>Continue shopping</Link>
 
             <Link to="/payment" className="general-button" style={{
-              backgroundColor: '#4A90E2'
+              backgroundColor: '#7ED321',
             }}>Proceed to payment</Link>
 
 

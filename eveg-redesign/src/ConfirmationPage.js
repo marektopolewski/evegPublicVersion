@@ -8,6 +8,7 @@ import { formatPrice, calculateTotals, getTotalBasketCost } from './model';
 export default class ConfirmationPage extends Component {
 
   render(){
+    console.log(Object.keys(this.props.order.paymentDetails))
     return (<div className="confirmation-page-container">
 
       <div className="checkout-head-container">
@@ -51,7 +52,10 @@ export default class ConfirmationPage extends Component {
             <p>
             It will be ready for collection in 3 days. Please make a note of the reference number or print off this page for reference.
 
-          An email confirmation has been sent to <b>{this.props.order.paymentDetails.email}</b> (not you?)
+            {
+              this.props.order.paymentDetails.email ?
+              <p><br/>An email confirmation has been sent to <b>{this.props.order.paymentDetails.email}</b></p> : ""
+            }
             </p>
 
             <Basket title="Order summary" noedit style={{
@@ -61,6 +65,30 @@ export default class ConfirmationPage extends Component {
               // maxWidth: '700px',
               zIndex: 0
             }} items={this.props.order.items} />
+
+            <div className="order-summary-details-container">
+
+            <h2>Personal & Payment details</h2>
+
+              <table>
+              <tbody>
+                {
+                  Object.keys(this.props.order.paymentDetails).map(name =>
+                  <tr>
+                    <td><b>{name}</b></td>
+                    <td style={{
+                      textAlign: 'end'
+                    }}>{this.props.order.paymentDetails[name]}</td>
+                  </tr>)
+                }
+              </tbody>
+              </table>
+            </div>
+
+            <h2 style={{
+              marginTop: '30px',
+              marginBottom: '30px'
+            }}>Cost Summary</h2>
 
             <div style={{
               justifyContent: 'flex-end',
@@ -94,7 +122,8 @@ export default class ConfirmationPage extends Component {
 
 
           <Link className="general-button" style={{
-            backgroundColor: 'gray'
+            backgroundColor: 'gray',
+            marginBottom: '30px',
           }} to="/">Continue Shopping</Link>
 
         </div>

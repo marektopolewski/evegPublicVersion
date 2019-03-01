@@ -4,15 +4,13 @@ import InputMask from 'react-input-mask';
 import { Step, Form, Dropdown } from 'semantic-ui-react';
 import { createEmptyBasket, getBasketItems } from './model';
 import 'semantic-ui-css/semantic.min.css';
-import { COUNTRIES_DATA } from './countriesData';
-
-COUNTRIES_DATA = COUNTRIES_DATA.map(c => Object({...c, flag: c.flag.toLowerCase()}));
+import {Countries} from './countriesData';
 
 export default class PaymentPage extends Component {
 
   constructor(props, context){
     super(props, context);
-    
+
     this.state = {
       numberValue: "",
       form: {}
@@ -20,24 +18,19 @@ export default class PaymentPage extends Component {
 
     this.updateInfo = this.updateInfo.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
   }
 
-  updateInfo(e){
+  updateInfo(e, field){
+    var name = field ? field.name : e.target.name;
+    var value = field ? field.value : e.target.value;
 
-    // var updatedField = {};
-    // updatedField[updated.name] = updated.value;
 
-    // this.setState({
-    //   ...this.state,
-    //   form: {
-    //     ...this.state.form,
-    //     ...updatedField
-    //   }
-    // });
-    // console.log(e.target.name);
-    // console.log(this.state);
-    console.log(this.props.order.paymentDetails, e.target.name, e.target.value);
-    this.props.order.paymentDetails[e.target.name] = e.target.value;
+    if (name == "Card Number") value = `****-****-****-${value.substring(15, value.length)}`;
+    if (name == 'securityCode') return;
+
+    this.props.order.paymentDetails[name] = value;
+    console.log(this.props.order.paymentDetails);
   }
 
   handleSubmit(e){
@@ -60,7 +53,7 @@ export default class PaymentPage extends Component {
         <h1> Payment </h1>
         <h2> Enter your billing information below </h2>
 
-        <Step.Group ordered link onClick={() => this.props.order.items.length === 0 ? this.props.history.push('/checkout') : ""}>
+        <Step.Group ordered onClick={() => this.props.history.push('/checkout')}>
           <Step completed>
             <Step.Content>
               <Step.Title>Summary</Step.Title>
@@ -75,7 +68,7 @@ export default class PaymentPage extends Component {
             </Step.Content>
           </Step>
 
-          <Step>
+          <Step ordered>
             <Step.Content>
               <Step.Title>Order Confirmation</Step.Title>
             </Step.Content>
@@ -90,15 +83,15 @@ export default class PaymentPage extends Component {
         <p> Your personal details are used to manage your order. </p>
 
         <Form.Group>
-          <Form.Input required onChange={this.updateInfo} name="firstName" label="First Name" placeholder="First Name" />
-          <Form.Input required onChange={this.updateInfo} name="lastName" label="Last Name" placeholder="Last Name" />
+          <Form.Input required onChange={this.updateInfo} name="First Name" label="First Name" placeholder="First Name" />
+          <Form.Input required onChange={this.updateInfo} name="Last Name" label="Last Name" placeholder="Last Name" />
         </Form.Group>
         <Form.Group>
-          <Form.Input onChange={this.updateInfo} name="email" type="email" label="Email" placeholder="john.smith@example.com" />
+          <Form.Input onChange={this.updateInfo} name="Email" type="email" label="Email" placeholder="john.smith@example.com" />
 
           <InputMask mask="9999 999 9999" onChange={this.updateInfo}>
             {({inputProps}) =>
-              <Form.Input {...inputProps} required name="phoneNumber" label="Phone Number" type="tel" placeholder='+XX XXX XXX XXXX' />
+              <Form.Input {...inputProps} required name="Phone Number" label="Phone Number" type="tel" placeholder='XXXX XXX XXXX' />
             }
           </InputMask>
         </Form.Group>
@@ -108,15 +101,15 @@ export default class PaymentPage extends Component {
 
         <p> Enter your payment details below. Payment will occur before collection. </p>
         <Form.Group>
-          <Form.Input required onChange={this.updateInfo} name="address1" label="Address Line 1" placeholder="University Of Warwick" />
+          <Form.Input required onChange={this.updateInfo} name="Address Line 1" label="Address Line 1" placeholder="University Of Warwick" />
           <InputMask mask="9999-9999-9999-9999" onChange={this.updateInfo}>
           {({inputProps}) =>
-            <Form.Input required name="cardNumber" label="Card Number" placeholder="XXXX-XXXX-XXXX-XXXX" />
+            <Form.Input required name="Card Number" label="Card Number" placeholder="XXXX-XXXX-XXXX-XXXX" />
           }
         </InputMask>
         </Form.Group>
         <Form.Group>
-          <Form.Input onChange={this.updateInfo} name="address2" label="Address Line 2" placeholder="University Of Warwick" />
+          <Form.Input onChange={this.updateInfo} name="Address Line 2" label="Address Line 2" placeholder="University Of Warwick" />
 
           <InputMask mask="999" onChange={this.updateInfo}>
           {({inputProps}) =>
@@ -126,36 +119,37 @@ export default class PaymentPage extends Component {
 
         <InputMask mask="99/9999" onChange={this.updateInfo}>
         {({inputProps}) =>
-          <Form.Input width={5} required name="expiryDate" label="Expiry Date"  placeholder="MM/YYYY" />
+          <Form.Input width={5} required name="Expiry Date" label="Expiry Date"  placeholder="MM/YYYY" />
         }
       </InputMask>
 
         </Form.Group>
 
         <Form.Group>
-          <Form.Input required onChange={this.updateInfo} name="country" label="Country" placeholder="United Kingdom" />
-
+{
+            // <Form.Input required onChange={this.updateInfo} name="country" label="Country" placeholder="United Kingdom" />
+}
           <Form.Field>
           <label htmlFor="country">Country</label>
           <Dropdown
-            name="country"
+            name="Country Code"
             onChange={this.updateInfo}
-            options={COUNTRIES_DATA}
+            options={Countries.map(c => Object({...c, flag: c.flag.toLowerCase()}))}
             search
             selection
             selectOnBlur={false}
           />
         </Form.Field>
 
-          <Form.Input required onChange={this.updateInfo} name="cardName" label="Name on card" placeholder="John Smith" />
+          <Form.Input required onChange={this.updateInfo} name="Card Holder Name" label="Name on card" placeholder="John Smith" />
         </Form.Group>
 
         <Form.Group>
-          <Form.Input onChange={this.updateInfo} name="county" label="County" placeholder="Warwickshire" />
+          <Form.Input onChange={this.updateInfo} name="County" label="County" placeholder="Warwickshire" />
 
-          <InputMask mask="aaa aaa" onChange={this.updateInfo}>
+          <InputMask mask="*** ***" onChange={this.updateInfo}>
           {({inputProps}) =>
-            <Form.Input onChange={this.updateInfo} name="postcode" label="Postcode" placeholder="CV4 7AL" />
+            <Form.Input onChange={this.updateInfo} name="Postcode" label="Postcode" placeholder="CV4 7AL" />
           }
         </InputMask>
         </Form.Group>
@@ -168,10 +162,10 @@ export default class PaymentPage extends Component {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#FF435A',
+            backgroundColor: 'grey',
             margin: '10px',
             height: '36px',
-          }} className="general-button" to="/">Cancel</Link>
+          }} className="general-button" to="/checkout">Back</Link>
 
           <Form.Button className="general-button" style={{
             width: '200px',
@@ -180,7 +174,7 @@ export default class PaymentPage extends Component {
             alignItems: 'center',
             backgroundColor: '#7ED321',
             color: 'white'
-          }} content="submit">Confirm Order</Form.Button>
+          }}>Confirm Order</Form.Button>
 
         </div>
 

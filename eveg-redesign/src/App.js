@@ -8,7 +8,7 @@ import ConfirmationPage from './ConfirmationPage';
 import PaymentPage from './PaymentPage';
 import FaqPage from './FaqPage';
 import ClickAndCollectPage from './ClickAndCollectPage';
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, Slide } from "react-toastify";
 import './model.js';
 import './App.css';
 import './Resets.css';
@@ -19,10 +19,14 @@ class App extends Component {
 
   constructor(props, context){
     super(props, context);
-    this.state = {};
+    this.state = {
+      disableBasket: false
+    };
     this.updates = this.updates.bind(this);
     this.order = {
-      paymentDetails: {},
+      paymentDetails: {
+        sampleName: 'John'
+      },
       items: []
     };
   }
@@ -59,7 +63,18 @@ class App extends Component {
                   ({history}) => <ProductPage updates={this.updates} history={history} />
               } />
           </Switch>
-              <ToastContainer />
+              <ToastContainer
+                position="top-left"
+                autoClose={2000}
+                hideProgressBar
+                transition="slide"
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnVisibilityChange={false}
+                draggable={false}
+                pauseOnHover={false}
+              />
               <Footer />
           </div>
       </Router>
