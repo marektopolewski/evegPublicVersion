@@ -67,7 +67,7 @@ class App extends Component {
                 position="top-left"
                 autoClose={2000}
                 hideProgressBar
-                transition="slide"
+                transition={Slide}
                 newestOnTop={false}
                 closeOnClick
                 rtl={false}
