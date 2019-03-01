@@ -1,23 +1,28 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import InputMask from 'react-input-mask';
-import { Step, Form } from 'semantic-ui-react';
+import { Step, Form, Dropdown } from 'semantic-ui-react';
 import { createEmptyBasket, getBasketItems } from './model';
 import 'semantic-ui-css/semantic.min.css';
+import { COUNTRIES_DATA } from './countriesData';
+
+COUNTRIES_DATA = COUNTRIES_DATA.map(c => Object({...c, flag: c.flag.toLowerCase()}));
 
 export default class PaymentPage extends Component {
 
   constructor(props, context){
     super(props, context);
+    
     this.state = {
       numberValue: "",
       form: {}
-    }
+    };
+
     this.updateInfo = this.updateInfo.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  updateInfo(e, {name, value}){
+  updateInfo(e){
 
     // var updatedField = {};
     // updatedField[updated.name] = updated.value;
@@ -29,17 +34,16 @@ export default class PaymentPage extends Component {
     //     ...updatedField
     //   }
     // });
+    // console.log(e.target.name);
     // console.log(this.state);
-    this.props.order.paymentDetails[name] = value;
-    console.log(this.props.order.paymentDetails);
+    console.log(this.props.order.paymentDetails, e.target.name, e.target.value);
+    this.props.order.paymentDetails[e.target.name] = e.target.value;
   }
 
   handleSubmit(e){
 
     e.preventDefault();
     e.stopPropagation();
-
-    // Perform form validation.
 
     // Clear the basket & save items in the order object.
     this.props.order.items = getBasketItems();
@@ -92,7 +96,7 @@ export default class PaymentPage extends Component {
         <Form.Group>
           <Form.Input onChange={this.updateInfo} name="email" type="email" label="Email" placeholder="john.smith@example.com" />
 
-          <InputMask mask="9999 999 9999" value={this.state.numberValue} onChange={this.updateInfo}>
+          <InputMask mask="9999 999 9999" onChange={this.updateInfo}>
             {({inputProps}) =>
               <Form.Input {...inputProps} required name="phoneNumber" label="Phone Number" type="tel" placeholder='+XX XXX XXX XXXX' />
             }
@@ -105,7 +109,7 @@ export default class PaymentPage extends Component {
         <p> Enter your payment details below. Payment will occur before collection. </p>
         <Form.Group>
           <Form.Input required onChange={this.updateInfo} name="address1" label="Address Line 1" placeholder="University Of Warwick" />
-          <InputMask mask="9999-9999-9999-9999" value={this.state.numberValue} onChange={this.updateInfo}>
+          <InputMask mask="9999-9999-9999-9999" onChange={this.updateInfo}>
           {({inputProps}) =>
             <Form.Input required name="cardNumber" label="Card Number" placeholder="XXXX-XXXX-XXXX-XXXX" />
           }
@@ -113,19 +117,47 @@ export default class PaymentPage extends Component {
         </Form.Group>
         <Form.Group>
           <Form.Input onChange={this.updateInfo} name="address2" label="Address Line 2" placeholder="University Of Warwick" />
-          <Form.Input tooltip="This is the security code at the back of your debit or credit card" width={3} required onChange={this.updateInfo} name="securityCode" label="CCV" placeholder="xxx" />
-          <Form.Input width={5} required onChange={this.updateInfo} name="expiryDate" label="Expiry Date" placeholder="MM / YYYY" />
+
+          <InputMask mask="999" onChange={this.updateInfo}>
+          {({inputProps}) =>
+            <Form.Input tooltip="This is the security code at the back of your debit or credit card" width={3} required name="securityCode" label="CCV" placeholder="xxx" />
+          }
+        </InputMask>
+
+        <InputMask mask="99/9999" onChange={this.updateInfo}>
+        {({inputProps}) =>
+          <Form.Input width={5} required name="expiryDate" label="Expiry Date"  placeholder="MM/YYYY" />
+        }
+      </InputMask>
 
         </Form.Group>
 
         <Form.Group>
           <Form.Input required onChange={this.updateInfo} name="country" label="Country" placeholder="United Kingdom" />
+
+          <Form.Field>
+          <label htmlFor="country">Country</label>
+          <Dropdown
+            name="country"
+            onChange={this.updateInfo}
+            options={COUNTRIES_DATA}
+            search
+            selection
+            selectOnBlur={false}
+          />
+        </Form.Field>
+
           <Form.Input required onChange={this.updateInfo} name="cardName" label="Name on card" placeholder="John Smith" />
         </Form.Group>
 
         <Form.Group>
           <Form.Input onChange={this.updateInfo} name="county" label="County" placeholder="Warwickshire" />
-          <Form.Input onChange={this.updateInfo} name="postcode" label="Postcode" placeholder="CV4 7AL" />
+
+          <InputMask mask="aaa aaa" onChange={this.updateInfo}>
+          {({inputProps}) =>
+            <Form.Input onChange={this.updateInfo} name="postcode" label="Postcode" placeholder="CV4 7AL" />
+          }
+        </InputMask>
         </Form.Group>
 
         <div style={{
