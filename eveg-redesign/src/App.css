@@ -40,6 +40,15 @@ a.logo-nav p {
   font-size: large;
 }
 
+/** Global Link styling */
+a {
+  color: rgba(255,255,255,0.7) !important;
+}
+
+a:hover{
+  color: white !important;
+}
+
 
 /** Basket Styling */
 div.basket-wrapper {
@@ -149,6 +158,19 @@ div.checkout-basket-container {
 
 
 /** Payment page styling */
+
+/** Payment confirmations tyling */
+div.payment-confirmation-container {
+  padding: 20px;
+
+}
+
+div.payment-confirmation-buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
 div.payment-form-container {
   max-width: 700px;
   margin: 30px auto auto;
@@ -176,8 +198,23 @@ button {
 .general-button {
   padding: 10px;
   border-radius: 5px;
-  color: white;
+  color: rgba(255,255,255,0.7) !important;
   font-weight: 600;
+}
+
+.general-button button {
+  padding: 10px;
+  border-radius: 5px;
+  color: rgba(255,255,255,0.7) !important;
+  font-weight: 600;
+}
+
+.general-button:hover {
+  color: white !important;
+}
+
+.general-button:hover button {
+  color: white !important;
 }
 
 button.button-fade {
@@ -230,6 +267,7 @@ button.active > svg {
 /* -------------------- Confirmation Page styling -------------------- */
 .order-summary-details-container {
   width: 100%;
+  padding: 20px;
 }
 
 div.confirmation-page-content-container {

@@ -73,9 +73,9 @@ export default class ConfirmationPage extends Component {
               <table>
               <tbody>
                 {
-                  Object.keys(this.props.order.paymentDetails).map(name =>
-                  <tr>
-                    <td><b>{name}</b></td>
+                  Object.keys(this.props.order.paymentDetails).sort((a, b) => a.split('_')[1] - b.split('_')[1]).map((name, i) =>
+                  <tr key={i}>
+                    <td><b>{name.split('_')[0]}</b></td>
                     <td style={{
                       textAlign: 'end'
                     }}>{this.props.order.paymentDetails[name]}</td>
@@ -86,19 +86,19 @@ export default class ConfirmationPage extends Component {
             </div>
 
             <h2 style={{
-              marginTop: '30px',
-              marginBottom: '30px'
+              margin: '20px',
+              alignSelf: 'flex-start'
             }}>Cost Summary</h2>
 
             <div style={{
               justifyContent: 'flex-end',
-              margin: '20px',
+              margin: '0px 20px 0px 20px',
               width: '100%',
+              padding: '0px 20px 0px 20px',
             }} className="basket-cost-container">
               <table>
                 <tbody>
                   <th></th>
-                  <th><p style={{width: 'fit-content', marginLeft: 'auto'}}>Cost</p></th>
                   <tr>
                     <td> Total excluding VAT </td>
                     <td>

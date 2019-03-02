@@ -2,9 +2,34 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import InputMask from 'react-input-mask';
 import { Step, Form, Dropdown } from 'semantic-ui-react';
-import { createEmptyBasket, getBasketItems } from './model';
+import { createEmptyBasket, getBasketItems, formatPrice, calculateTotals } from './model';
 import 'semantic-ui-css/semantic.min.css';
 import {Countries} from './countriesData';
+import Modal from 'react-awesome-modal';
+import { toast } from 'react-toastify';
+
+
+const PaymentConfirmationDialogue = ({visible, onConfirm, onCancel, items}) => <Modal visible={visible}>
+  <div className="payment-confirmation-container">
+    <h2>Place your order?</h2>
+
+    <p>You will be charged: <b>{ formatPrice(parseInt(calculateTotals(items)['total'])) }</b></p>
+
+    <p>Clicking 'Pay Now' below will charge the payment method selected.</p>
+
+    <div className="payment-confirmation-buttons-container">
+      <button onClick={onCancel} style={{
+        backgroundColor: '#f44336',
+        width: '200px',
+      }} className="general-button">Cancel</button>
+      <button onClick={onConfirm} style={{
+        backgroundColor: '#7ED321',
+        width: '200px'
+      }} className="general-button">Pay Now</button>
+    </div>
+
+  </div>
+</Modal>
 
 export default class PaymentPage extends Component {
 
@@ -13,12 +38,31 @@ export default class PaymentPage extends Component {
 
     this.state = {
       numberValue: "",
-      form: {}
+      form: {},
+      confirmationDialogueVisible: false,
     };
 
     this.updateInfo = this.updateInfo.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onPaymentCancellation = this.onPaymentCancellation.bind(this);
+    this.onPaymentConfirmation = this.onPaymentConfirmation.bind(this);
 
+  }
+
+  getOrder(name){
+    switch (name){
+      case 'Address Line 1':
+        return 1;
+      case 'Address Line 2':
+        return 2;
+      case 'Country Code': return 3;
+      case 'County': return 4;
+      case 'Postcode': return 5;
+      case 'Card Holder Name': return 7;
+      case 'Card Number': return 8;
+      case 'Expiry Date': return 9;
+      default: return -1;
+    }
   }
 
   updateInfo(e, field){
@@ -29,6 +73,8 @@ export default class PaymentPage extends Component {
     if (name == "Card Number") value = `****-****-****-${value.substring(15, value.length)}`;
     if (name == 'securityCode') return;
 
+    name = `${name}_${this.getOrder(name)}`;
+
     this.props.order.paymentDetails[name] = value;
     console.log(this.props.order.paymentDetails);
   }
@@ -38,10 +84,40 @@ export default class PaymentPage extends Component {
     e.preventDefault();
     e.stopPropagation();
 
+    this.showConfirmationDialogue();
+  }
+
+  showConfirmationDialogue(){
+    this.setState({
+      ...this.state,
+      confirmationDialogueVisible: true
+    });
+  }
+
+  placeOrder(){
     // Clear the basket & save items in the order object.
     this.props.order.items = getBasketItems();
     createEmptyBasket();
     this.props.history.push('/confirmation');
+  }
+
+  onPaymentCancellation(){
+    this.setState({
+      ...this.state,
+      confirmationDialogueVisible: false
+    });
+    toast.error('Order canclled.');
+  }
+
+  onPaymentConfirmation(){
+    this.setState({
+      ...this.state,
+      confirmationDialogueVisible: false,
+    });
+    toast.success("Order successfully placed.", {
+      onClose: () => this.props.history.push("/confirmation")
+    });
+
   }
 
   render(){
@@ -49,6 +125,13 @@ export default class PaymentPage extends Component {
 
       <div>
         <div className="checkout-head-container">
+
+        <PaymentConfirmationDialogue
+          onConfirm={this.onPaymentConfirmation}
+          onCancel={this.onPaymentCancellation}
+          items={this.props.order.items}
+          visible={this.state.confirmationDialogueVisible}
+        />
 
         <h1> Payment </h1>
         <h2> Enter your billing information below </h2>
