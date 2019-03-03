@@ -64,8 +64,8 @@ export default class ProductPage extends Component {
     const { selectedOrdering } = this.state;
 
     const displayOptions = [
-      {label:'Horizontal', value:0},
-      {label:'Vertical', value:1}
+      {label:'Vertical', value:0},
+      {label:'Horizontal', value:1}
     ];
 
     const orderingOptions = [

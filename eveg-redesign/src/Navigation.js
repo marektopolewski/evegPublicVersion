@@ -14,7 +14,7 @@ export default class Navigation extends Component {
       <nav className="navigation">
         <LogoNav />
 
-        <BasketButton />
+        <BasketButton disabled={this.props.disableBasket} />
 
       </nav>
 

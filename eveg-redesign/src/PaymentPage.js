@@ -1,35 +1,80 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import InputMask from 'react-input-mask';
-import { Step, Form } from 'semantic-ui-react';
-import { createEmptyBasket, getBasketItems } from './model';
+import { Step, Form, Dropdown } from 'semantic-ui-react';
+import { createEmptyBasket, getBasketItems, formatPrice, calculateTotals } from './model';
 import 'semantic-ui-css/semantic.min.css';
+import {Countries} from './countriesData';
+import Modal from 'react-awesome-modal';
+import { toast } from 'react-toastify';
+
+
+const PaymentConfirmationDialogue = ({visible, onConfirm, onCancel, items}) => <Modal visible={visible}>
+  <div className="payment-confirmation-container">
+    <h2>Place your order?</h2>
+
+    <p>You will be charged: <b>{ formatPrice(parseInt(calculateTotals(items)['total'])) }</b></p>
+
+    <p>Clicking 'Pay Now' below will charge the payment method selected.</p>
+
+    <div className="payment-confirmation-buttons-container">
+      <button onClick={onCancel} style={{
+        backgroundColor: '#f44336',
+        width: '200px',
+      }} className="general-button">Cancel</button>
+      <button onClick={onConfirm} style={{
+        backgroundColor: '#7ED321',
+        width: '200px'
+      }} className="general-button">Pay Now</button>
+    </div>
+
+  </div>
+</Modal>
 
 export default class PaymentPage extends Component {
 
   constructor(props, context){
     super(props, context);
+
     this.state = {
       numberValue: "",
-      form: {}
-    }
+      form: {},
+      confirmationDialogueVisible: false,
+    };
+
     this.updateInfo = this.updateInfo.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onPaymentCancellation = this.onPaymentCancellation.bind(this);
+    this.onPaymentConfirmation = this.onPaymentConfirmation.bind(this);
+
   }
 
-  updateInfo(e, {name, value}){
+  getOrder(name){
+    switch (name){
+      case 'Address Line 1':
+        return 1;
+      case 'Address Line 2':
+        return 2;
+      case 'Country Code': return 3;
+      case 'County': return 4;
+      case 'Postcode': return 5;
+      case 'Card Holder Name': return 7;
+      case 'Card Number': return 8;
+      case 'Expiry Date': return 9;
+      default: return -1;
+    }
+  }
 
-    // var updatedField = {};
-    // updatedField[updated.name] = updated.value;
+  updateInfo(e, field){
+    var name = field ? field.name : e.target.name;
+    var value = field ? field.value : e.target.value;
 
-    // this.setState({
-    //   ...this.state,
-    //   form: {
-    //     ...this.state.form,
-    //     ...updatedField
-    //   }
-    // });
-    // console.log(this.state);
+
+    if (name == "Card Number") value = `****-****-****-${value.substring(15, value.length)}`;
+    if (name == 'securityCode') return;
+
+    name = `${name}_${this.getOrder(name)}`;
+
     this.props.order.paymentDetails[name] = value;
     console.log(this.props.order.paymentDetails);
   }
@@ -39,12 +84,40 @@ export default class PaymentPage extends Component {
     e.preventDefault();
     e.stopPropagation();
 
-    // Perform form validation.
+    this.showConfirmationDialogue();
+  }
 
+  showConfirmationDialogue(){
+    this.setState({
+      ...this.state,
+      confirmationDialogueVisible: true
+    });
+  }
+
+  placeOrder(){
     // Clear the basket & save items in the order object.
     this.props.order.items = getBasketItems();
     createEmptyBasket();
     this.props.history.push('/confirmation');
+  }
+
+  onPaymentCancellation(){
+    this.setState({
+      ...this.state,
+      confirmationDialogueVisible: false
+    });
+    toast.error('Order canclled.');
+  }
+
+  onPaymentConfirmation(){
+    this.setState({
+      ...this.state,
+      confirmationDialogueVisible: false,
+    });
+    toast.success("Order successfully placed.", {
+      onClose: () => this.props.history.push("/confirmation")
+    });
+
   }
 
   render(){
@@ -53,10 +126,17 @@ export default class PaymentPage extends Component {
       <div style={{minHeight:`80%`}}>
         <div className="checkout-head-container">
 
+        <PaymentConfirmationDialogue
+          onConfirm={this.onPaymentConfirmation}
+          onCancel={this.onPaymentCancellation}
+          items={this.props.order.items}
+          visible={this.state.confirmationDialogueVisible}
+        />
+
         <h1> Payment </h1>
         <h2> Enter your billing information below </h2>
 
-        <Step.Group ordered link onClick={() => this.props.order.items.length === 0 ? this.props.history.push('/checkout') : ""}>
+        <Step.Group ordered onClick={() => this.props.history.push('/checkout')}>
           <Step completed>
             <Step.Content>
               <Step.Title>Summary</Step.Title>
@@ -71,7 +151,7 @@ export default class PaymentPage extends Component {
             </Step.Content>
           </Step>
 
-          <Step>
+          <Step ordered>
             <Step.Content>
               <Step.Title>Order Confirmation</Step.Title>
             </Step.Content>
@@ -86,15 +166,15 @@ export default class PaymentPage extends Component {
         <p> Your personal details are used to manage your order. </p>
 
         <Form.Group>
-          <Form.Input required onChange={this.updateInfo} name="firstName" label="First Name" placeholder="First Name" />
-          <Form.Input required onChange={this.updateInfo} name="lastName" label="Last Name" placeholder="Last Name" />
+          <Form.Input required onChange={this.updateInfo} name="First Name" label="First Name" placeholder="First Name" />
+          <Form.Input required onChange={this.updateInfo} name="Last Name" label="Last Name" placeholder="Last Name" />
         </Form.Group>
         <Form.Group>
-          <Form.Input onChange={this.updateInfo} name="email" type="email" label="Email" placeholder="john.smith@example.com" />
+          <Form.Input onChange={this.updateInfo} name="Email" type="email" label="Email" placeholder="john.smith@example.com" />
 
-          <InputMask mask="9999 999 9999" value={this.state.numberValue} onChange={this.updateInfo}>
+          <InputMask mask="9999 999 9999" onChange={this.updateInfo}>
             {({inputProps}) =>
-              <Form.Input {...inputProps} required name="phoneNumber" label="Phone Number" type="tel" placeholder='+XX XXX XXX XXXX' />
+              <Form.Input {...inputProps} required name="Phone Number" label="Phone Number" type="tel" placeholder='XXXX XXX XXXX' />
             }
           </InputMask>
         </Form.Group>
@@ -104,28 +184,57 @@ export default class PaymentPage extends Component {
 
         <p> Enter your payment details below. Payment will occur before collection. </p>
         <Form.Group>
-          <Form.Input required onChange={this.updateInfo} name="address1" label="Address Line 1" placeholder="University Of Warwick" />
-          <InputMask mask="9999-9999-9999-9999" value={this.state.numberValue} onChange={this.updateInfo}>
+          <Form.Input required onChange={this.updateInfo} name="Address Line 1" label="Address Line 1" placeholder="University Of Warwick" />
+          <InputMask mask="9999-9999-9999-9999" onChange={this.updateInfo}>
           {({inputProps}) =>
-            <Form.Input required name="cardNumber" label="Card Number" placeholder="XXXX-XXXX-XXXX-XXXX" />
+            <Form.Input required name="Card Number" label="Card Number" placeholder="XXXX-XXXX-XXXX-XXXX" />
           }
         </InputMask>
         </Form.Group>
         <Form.Group>
-          <Form.Input onChange={this.updateInfo} name="address2" label="Address Line 2" placeholder="University Of Warwick" />
-          <Form.Input tooltip="This is the security code at the back of your debit or credit card" width={3} required onChange={this.updateInfo} name="securityCode" label="CCV" placeholder="xxx" />
-          <Form.Input width={5} required onChange={this.updateInfo} name="expiryDate" label="Expiry Date" placeholder="MM / YYYY" />
+          <Form.Input onChange={this.updateInfo} name="Address Line 2" label="Address Line 2" placeholder="University Of Warwick" />
+
+          <InputMask mask="999" onChange={this.updateInfo}>
+          {({inputProps}) =>
+            <Form.Input tooltip="This is the security code at the back of your debit or credit card" width={3} required name="securityCode" label="CCV" placeholder="xxx" />
+          }
+        </InputMask>
+
+        <InputMask mask="99/9999" onChange={this.updateInfo}>
+        {({inputProps}) =>
+          <Form.Input width={5} required name="Expiry Date" label="Expiry Date"  placeholder="MM/YYYY" />
+        }
+      </InputMask>
 
         </Form.Group>
 
         <Form.Group>
-          <Form.Input required onChange={this.updateInfo} name="country" label="Country" placeholder="United Kingdom" />
-          <Form.Input required onChange={this.updateInfo} name="cardName" label="Name on card" placeholder="John Smith" />
+{
+            // <Form.Input required onChange={this.updateInfo} name="country" label="Country" placeholder="United Kingdom" />
+}
+          <Form.Field>
+          <label htmlFor="country">Country</label>
+          <Dropdown
+            name="Country Code"
+            onChange={this.updateInfo}
+            options={Countries.map(c => Object({...c, flag: c.flag.toLowerCase()}))}
+            search
+            selection
+            selectOnBlur={false}
+          />
+        </Form.Field>
+
+          <Form.Input required onChange={this.updateInfo} name="Card Holder Name" label="Name on card" placeholder="John Smith" />
         </Form.Group>
 
         <Form.Group>
-          <Form.Input onChange={this.updateInfo} name="county" label="County" placeholder="Warwickshire" />
-          <Form.Input onChange={this.updateInfo} name="postcode" label="Postcode" placeholder="CV4 7AL" />
+          <Form.Input onChange={this.updateInfo} name="County" label="County" placeholder="Warwickshire" />
+
+          <InputMask mask="*** ***" onChange={this.updateInfo}>
+          {({inputProps}) =>
+            <Form.Input onChange={this.updateInfo} name="Postcode" label="Postcode" placeholder="CV4 7AL" />
+          }
+        </InputMask>
         </Form.Group>
 
         <div style={{
@@ -136,10 +245,10 @@ export default class PaymentPage extends Component {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#FF435A',
+            backgroundColor: 'grey',
             margin: '10px',
             height: '36px',
-          }} className="general-button" to="/">Cancel</Link>
+          }} className="general-button" to="/checkout">Back</Link>
 
           <Form.Button className="general-button" style={{
             width: '200px',
@@ -148,7 +257,7 @@ export default class PaymentPage extends Component {
             alignItems: 'center',
             backgroundColor: '#7ED321',
             color: 'white'
-          }} content="submit">Confirm Order</Form.Button>
+          }}>Confirm Order</Form.Button>
 
         </div>
 

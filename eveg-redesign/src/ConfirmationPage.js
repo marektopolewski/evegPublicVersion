@@ -8,6 +8,7 @@ import { formatPrice, calculateTotals, getTotalBasketCost } from './model';
 export default class ConfirmationPage extends Component {
 
   render(){
+    console.log(Object.keys(this.props.order.paymentDetails))
     return (
      <div className="confirmation-page-container" style = {{minHeight:`80%`, marginBottom:`30px`}}>
 
