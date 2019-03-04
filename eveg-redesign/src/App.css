@@ -182,6 +182,10 @@ div.checkout-basket-container {
 /** Payment page styling */
 
 /** Payment confirmations tyling */
+.confirmation-page-container {
+  margin-bottom: 20px;
+}
+
 div.payment-confirmation-container {
   padding: 20px;
 
