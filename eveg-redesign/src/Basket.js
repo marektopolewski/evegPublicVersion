@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CartIconNav, CloseIcon, Button } from './Asset';
+import { CartIconNav, CloseIcon, Bin } from './Asset';
 import { Link } from "react-router-dom";
 import {
   removeProductFromBasket,
@@ -14,7 +14,7 @@ import {
 } from './model.js';
 import ReactTooltip from 'react-tooltip';
 import { toast } from 'react-toastify';
-// import { Dropdown } from 'semantic-ui-react';
+import { Button, Confirm } from 'semantic-ui-react';
 // import NumberPicker from 'semantic-ui-react-numberpicker';
 
 /**
@@ -154,7 +154,9 @@ class Basket extends Component {
     this.decQuantity = this.decQuantity.bind(this);
     this.removeItem = this.removeItem.bind(this);
     this.getItems = this.getItems.bind(this);
-    this.state = {};
+    this.state = {
+        confirmOpen: false,
+    };
   }
 
   getItems(){
@@ -173,7 +175,6 @@ class Basket extends Component {
   decQuantity(name, quantity){
     changeProductQuantity(name.toLowerCase(), Math.max(quantity - 1, 0));
     this.setState(this.state);
-    this.items =
     this.props.update();
   }
 
@@ -198,6 +199,12 @@ class Basket extends Component {
     this.props.update();
   }
 
+  clearBasket(flag) {
+    this.state.confirmOpen = false;
+    if (flag) createEmptyBasket();
+    this.props.update();
+  }
+
   render(){
     return (
       <div style={this.props.style} className="basket-container">
@@ -214,6 +221,9 @@ class Basket extends Component {
                 <th>Size</th>
                 <th>Quantity</th>
                 <th>Price</th>
+                <th style={{textAlign:`center`}}>
+                    <div onClick={() => {this.state.confirmOpen=true; this.props.update();}}><Bin /></div>
+                </th>
               </tr>
               {
                 this.getItems().length > 0 ? this.getItems() : ""
@@ -232,6 +242,14 @@ class Basket extends Component {
         {this.props.children}
 
         </div>
+        <Confirm
+          open={this.state.confirmOpen}
+          cancelButton='Cancel'
+          confirmButton="Empty"
+          content='Are you sure you want to empty the basket?'
+          onCancel={() => this.clearBasket(false)}
+          onConfirm={() => this.clearBasket(true)}
+        />
       </div>
     );
   }
