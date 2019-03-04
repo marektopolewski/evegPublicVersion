@@ -39,7 +39,7 @@ class App extends Component {
     return (
       <Router>
           <div className="App">
-              <Navigation />
+              <Navigation order={this.order}/>
           <Switch>
               <Route exact path="/" component={
                 ({history}) => <DocumentTitle title="eVeg | Products"><ProductPage updates={this.updates} history={history} /></DocumentTitle>
