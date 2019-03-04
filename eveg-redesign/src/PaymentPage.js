@@ -203,10 +203,10 @@ export default class PaymentPage extends Component {
         </InputMask>
 
         <InputMask mask="99/9999" onChange={this.updateInfo} beforeMaskedValueChange={(newState, oldState, input, ops) => {
-          // 
+          //
           // console.log(newState);
-          // var month = newState.value.split('/')[0];
-          // var year = newState.value.split('/')[1];
+          var month = newState.value.split('/')[0];
+          var year = newState.value.split('/')[1];
 
           // if (month[0] !== "0") return oldState;
 
