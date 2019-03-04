@@ -8,7 +8,7 @@ export default class FaqPage extends Component {
 
   render(){
     return (
-        <div style={{width:`80%`, marginLeft:`auto`, marginRight:`auto`, marginBottom:`30px`}}>
+        <div style={{minHeight:`80%`, width:`80%`, marginLeft:`auto`, marginRight:`auto`, marginBottom:`30px`}}>
           <h1>FAQ</h1>
 
           <h3>What is eVeg?</h3>
@@ -31,7 +31,7 @@ export default class FaqPage extends Component {
           <h3>Why are some titles discounted while others are not?</h3>
           <p>Our decision to discount products is made internally and based on a number of strategic considerations which can vary over time. As it stands now, we offer discounts on hundreds of thousands of selected titles. However we cannot confirm when, if ever, a title will be discounted or how long a title once discounted will remain so.</p>
 
-          <h6>Credit: <a href="https://www.amazon.co.uk/gp/help/customer/display.html?nodeId=200041670">Amazon.co.uk</a></h6>
+          <h6>Credit: <a href="https://www.amazon.co.uk/gp/help/customer/display.html?nodeId=200041670" target="_blank">Amazon.co.uk</a></h6>
         </div>
     );
   }

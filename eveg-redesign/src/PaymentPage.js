@@ -125,7 +125,7 @@ export default class PaymentPage extends Component {
   render(){
     return (
 
-      <div>
+      <div style={{minHeight:`80%`}}>
         <div className="checkout-head-container">
 
         <PaymentConfirmationDialogue

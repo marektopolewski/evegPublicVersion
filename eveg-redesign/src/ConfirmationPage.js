@@ -52,10 +52,7 @@ export default class ConfirmationPage extends Component {
             <p>
             It will be ready for collection in 3 days. Please make a note of the reference number or print off this page for reference.
 
-            {
-              this.props.order.paymentDetails.email ?
-              <p><br/>An email confirmation has been sent to <b>{this.props.order.paymentDetails.email}</b></p> : ""
-            }
+          An email confirmation has been sent to <b>{this.props.order.paymentDetails.email}</b> (not you?)
             </p>
 
             <Basket title="Order summary" noedit style={{
@@ -66,39 +63,15 @@ export default class ConfirmationPage extends Component {
               zIndex: 0
             }} items={this.props.order.items} />
 
-            <div className="order-summary-details-container">
-
-            <h2>Personal & Payment details</h2>
-
-              <table>
-              <tbody>
-                {
-                  Object.keys(this.props.order.paymentDetails).sort((a, b) => a.split('_')[1] - b.split('_')[1]).map((name, i) =>
-                  <tr key={i}>
-                    <td><b>{name.split('_')[0]}</b></td>
-                    <td style={{
-                      textAlign: 'end'
-                    }}>{this.props.order.paymentDetails[name]}</td>
-                  </tr>)
-                }
-              </tbody>
-              </table>
-            </div>
-
-            <h2 style={{
-              margin: '20px',
-              alignSelf: 'flex-start'
-            }}>Cost Summary</h2>
-
             <div style={{
               justifyContent: 'flex-end',
-              margin: '0px 20px 0px 20px',
+              margin: '20px',
               width: '100%',
-              padding: '0px 20px 0px 20px',
             }} className="basket-cost-container">
               <table>
                 <tbody>
                   <th></th>
+                  <th><p style={{width: 'fit-content', marginLeft: 'auto'}}>Cost</p></th>
                   <tr>
                     <td> Total excluding VAT </td>
                     <td>
@@ -122,8 +95,7 @@ export default class ConfirmationPage extends Component {
 
 
           <Link className="general-button" style={{
-            backgroundColor: 'gray',
-            marginBottom: '30px',
+            backgroundColor: 'gray'
           }} to="/">Continue Shopping</Link>
 
         </div>
