@@ -222,7 +222,10 @@ class Basket extends Component {
                 <th>Quantity</th>
                 <th>Price</th>
                 <th style={{textAlign:`center`}}>
-                    <div onClick={() => {this.state.confirmOpen=true; this.props.update();}}><Bin /></div>
+                    <div style={{
+                      cursor: 'pointer',
+                      opacity: '0.7'
+                    }} onClick={() => {this.state.confirmOpen=true; this.props.update();}}><Bin /></div>
                 </th>
               </tr>
               {
