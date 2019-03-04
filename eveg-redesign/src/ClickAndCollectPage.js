@@ -27,7 +27,7 @@ export default class ClickAndCollectPage extends Component {
             <h3>Over 7,000 eVeg stores nationwide</h3>
             <p>Collect your item at a local eVeg store at a time that's easy for you, whether that's on your way to or from work, or on a Saturday or Sunday.</p>
             <br /><br />
-            <h6>Credit: <a href="https://www.collectplus.co.uk/click-and-collect" target="_blank">CollectPlus.co.uk</a></h6>
+            <h6>Credit: <a className="normal-link" href="https://www.collectplus.co.uk/click-and-collect" target="_blank">CollectPlus.co.uk</a></h6>
         </div>
     );
   }

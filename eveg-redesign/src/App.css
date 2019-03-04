@@ -49,6 +49,14 @@ a:hover{
   color: white !important;
 }
 
+.normal-link {
+  color: #4183c4;
+}
+
+.normal-link:hover {
+  color: #538EFF !important;
+}
+
 
 /** Basket Styling */
 div.basket-wrapper {
