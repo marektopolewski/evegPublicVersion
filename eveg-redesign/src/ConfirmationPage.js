@@ -61,7 +61,7 @@ export default class ConfirmationPage extends Component {
               width: '100%',
               // maxWidth: '700px',
               zIndex: 0
-            }} items={this.props.order.items} />
+            }} items={this.props.order.items} notClearable={false}/>
 
             <div style={{
               justifyContent: 'flex-end',

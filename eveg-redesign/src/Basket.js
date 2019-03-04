@@ -224,9 +224,11 @@ class Basket extends Component {
                 <th>Size</th>
                 <th>Quantity</th>
                 <th>Price</th>
-                <th className="empty-basket-button">
-                    <div onClick={() => {this.state.confirmOpen=true; this.props.update();}}><Bin /></div>
-                </th>
+                {this.props.notClearable === false ? "" : (<th className="empty-basket-button">
+                    <div onClick={() => {this.state.confirmOpen=true; this.props.update();}}>
+                        <Bin />
+                    </div>
+                </th>)}
               </tr>
               {
                 this.getItems().length > 0 ? this.getItems() : ""
