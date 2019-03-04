@@ -14,7 +14,7 @@ import {
 } from './model.js';
 import ReactTooltip from 'react-tooltip';
 import { toast } from 'react-toastify';
-import { Button, Confirm } from 'semantic-ui-react';
+import { Confirm } from 'semantic-ui-react';
 // import NumberPicker from 'semantic-ui-react-numberpicker';
 
 /**
@@ -201,7 +201,10 @@ class Basket extends Component {
 
   clearBasket(flag) {
     this.state.confirmOpen = false;
-    if (flag) createEmptyBasket();
+    if (flag) {
+      createEmptyBasket();
+      toast.success(`Basket emptied!`);
+    }
     this.props.update();
   }
 
@@ -221,7 +224,7 @@ class Basket extends Component {
                 <th>Size</th>
                 <th>Quantity</th>
                 <th>Price</th>
-                <th style={{textAlign:`center`}}>
+                <th className="empty-basket-button">
                     <div onClick={() => {this.state.confirmOpen=true; this.props.update();}}><Bin /></div>
                 </th>
               </tr>
@@ -244,11 +247,13 @@ class Basket extends Component {
         </div>
         <Confirm
           open={this.state.confirmOpen}
+          header='Careful!'
           cancelButton='Cancel'
           confirmButton="Empty"
           content='Are you sure you want to empty the basket?'
           onCancel={() => this.clearBasket(false)}
           onConfirm={() => this.clearBasket(true)}
+          size='small'
         />
       </div>
     );

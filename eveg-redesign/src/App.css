@@ -56,6 +56,18 @@ div.basket-wrapper {
   overflow-y: scroll;
 }
 
+.empty-basket-button {
+  text-align: center;
+}
+
+.empty-basket-button div {
+  width: 100px;
+}
+
+.empty-basket-button svg:hover{
+  cursor: pointer;
+}
+
 .basket-headings th {
   color: rgba(0,0,0,0.6);
   font-weight: bold;
