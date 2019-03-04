@@ -8,7 +8,7 @@ import { formatPrice, calculateTotals, getTotalBasketCost } from './model';
 export default class ConfirmationPage extends Component {
 
   render(){
-    console.log(Object.keys(this.props.order.paymentDetails))
+    console.log('Confirmed order:', this.props.order);
     return (<div className="confirmation-page-container">
 
       <div className="checkout-head-container">
@@ -103,13 +103,13 @@ export default class ConfirmationPage extends Component {
                     <td> Total excluding VAT </td>
                     <td>
                       <p style={{width: 'fit-content', marginLeft: 'auto'}}>
-                        { formatPrice(parseInt(calculateTotals(this.props.order.items)['totalnovat'])) }
+                        { formatPrice(parseFloat(calculateTotals(this.props.order.items)['totalnovat'])) }
                       </p>
                     </td>
                   </tr>
                   <tr>
                     <td><h2 style={{margin: 0, marginLeft: 'auto', fontWeight: 'normal'}}>Total</h2></td>
-                    <td><h2 style={{width: 'fit-content', margin: 0, marginLeft: 'auto'}}>{formatPrice(parseInt(calculateTotals(this.props.order.items)['total']))}</h2></td>
+                    <td><h2 style={{width: 'fit-content', margin: 0, marginLeft: 'auto'}}>{formatPrice(parseFloat(calculateTotals(this.props.order.items)['total']))}</h2></td>
                   </tr>
                 </tbody>
               </table>

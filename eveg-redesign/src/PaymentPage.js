@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import InputMask from 'react-input-mask';
 import { Step, Form, Dropdown } from 'semantic-ui-react';
-import { createEmptyBasket, getBasketItems, formatPrice, calculateTotals } from './model';
+import { createEmptyBasket, getBasketItems, formatPrice, calculateTotals, getTotalBasketCost } from './model';
 import 'semantic-ui-css/semantic.min.css';
 import {Countries} from './countriesData';
 import Modal from 'react-awesome-modal';
@@ -13,7 +13,7 @@ const PaymentConfirmationDialogue = ({visible, onConfirm, onCancel, items}) => <
   <div className="payment-confirmation-container">
     <h2>Place your order?</h2>
 
-    <p>You will be charged: <b>{ formatPrice(parseInt(calculateTotals(items)['total'])) }</b></p>
+    <p>You will be charged: <b>{ formatPrice(parseFloat(getTotalBasketCost())) }</b></p>
 
     <p>Clicking 'Pay Now' below will charge the payment method selected.</p>
 
@@ -46,6 +46,8 @@ export default class PaymentPage extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onPaymentCancellation = this.onPaymentCancellation.bind(this);
     this.onPaymentConfirmation = this.onPaymentConfirmation.bind(this);
+
+    console.log(this.props.order);
 
   }
 
@@ -115,7 +117,7 @@ export default class PaymentPage extends Component {
       confirmationDialogueVisible: false,
     });
     toast.success("Order successfully placed.", {
-      onClose: () => this.props.history.push("/confirmation")
+      onClose: () => this.placeOrder()
     });
 
   }
@@ -194,13 +196,27 @@ export default class PaymentPage extends Component {
         <Form.Group>
           <Form.Input onChange={this.updateInfo} name="Address Line 2" label="Address Line 2" placeholder="University Of Warwick" />
 
-          <InputMask mask="999" onChange={this.updateInfo}>
+          <InputMask mask="999" onChange={this.updateInfo} >
           {({inputProps}) =>
             <Form.Input tooltip="This is the security code at the back of your debit or credit card" width={3} required name="securityCode" label="CCV" placeholder="xxx" />
           }
         </InputMask>
 
-        <InputMask mask="99/9999" onChange={this.updateInfo}>
+        <InputMask mask="99/9999" onChange={this.updateInfo} beforeMaskedValueChange={(newState, oldState, input, ops) => {
+          // 
+          // console.log(newState);
+          // var month = newState.value.split('/')[0];
+          // var year = newState.value.split('/')[1];
+
+          // if (month[0] !== "0") return oldState;
+
+          // if (year && year.length == 4){
+          //   year = parseInt(year);
+          //   if (!(year >= 1950 || year <= 2050)) return oldState;
+          // }
+
+          return newState;
+        }}>
         {({inputProps}) =>
           <Form.Input width={5} required name="Expiry Date" label="Expiry Date"  placeholder="MM/YYYY" />
         }

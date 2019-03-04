@@ -42,7 +42,7 @@ a.logo-nav p {
 
 /** Global Link styling */
 a {
-  color: rgba(255,255,255,0.7) !important;
+  color: rgba(255,255,255,0.7);
 }
 
 a:hover{
