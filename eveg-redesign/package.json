@@ -13,7 +13,7 @@
     "react-dom": "^16.8.2",
     "react-input-mask": "^2.0.4",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.5",
+    "react-scripts": "5.0.1",
     "react-select": "^2.0.0-beta.7",
     "react-telephone-input": "^4.73.4",
     "react-toastify": "^4.5.2",
